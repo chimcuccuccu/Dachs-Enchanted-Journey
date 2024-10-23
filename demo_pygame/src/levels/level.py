@@ -2,8 +2,8 @@
 
 import pygame
 
-from demo_pygame.config import GROUND_LAYER, TILESIZE
-from sprites import Player
+from demo_pygame.utilz.config import GROUND_LAYER, TILESIZE
+
 
 class Level(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
@@ -13,10 +13,12 @@ class Level(pygame.sprite.Sprite):
         self.game = game
         self._layer = GROUND_LAYER
         self.groups = self.game.all_sprites
+
+
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.x = x * TILESIZE
         self.y = y * TILESIZE
-        self.image = pygame.image.load('img/Map1.png').convert_alpha()
+        self.image = pygame.image.load('../res/img/Map1.png').convert_alpha()
 
         self.rect = self.image.get_rect()
         self.display_surface = pygame.display.get_surface()
@@ -41,7 +43,7 @@ class YSortCameraGroup(pygame.sprite.Group):
         self.offset = pygame.math.Vector2()
 
         #creating the floor
-        self.floor_surf_original = pygame.image.load('./img/Map1.png').convert()
+        self.floor_surf_original = pygame.image.load('../res/img/Map1.png').convert()
         self.floor_rect = self.floor_surf_original.get_rect(topleft=(0,0))
     def custom_draw(self,player):
 

@@ -1,42 +1,47 @@
-from venv import create
-
 import pygame
-from pygame.examples.music_drop_fade import SCREEN_SIZE
-from pygame.examples.scrap_clipboard import screen
 
-from config import *
-from demo_pygame.level import Level
-from sprites import *
+from demo_pygame.src.entities.Enemy import Enemy
+from demo_pygame.src.entities.Player import Player
+from demo_pygame.src.entities.SpriteSheet import Spritesheet
+from demo_pygame.src.status.Attack import Attack
+from demo_pygame.src.status.AttackFire import AttackFire
+from demo_pygame.src.status.Heal import Heal
+from demo_pygame.src.ui.Button import Button
+from demo_pygame.utilz.config import *
+from demo_pygame.src.levels.level import *
 import sys
 
 class Game:
     def __init__(self):
         pygame.init()
         info = pygame.display.Info()
-
+        self.font = pygame.font.Font(None, 36)
         screen_width = info.current_w
         screen_height = info.current_h
         self.screen = pygame.display.set_mode((screen_width, screen_height))
         self.clock = pygame.time.Clock()
-        self.font = pygame.font.Font('Arialn.ttf', 32)
         self.running = True
-        self.nganMapSprite = Spritesheet('img/Map1.png')
-        self.character_spritesheet = Spritesheet('img/character.png')
-        self.terrain_spritesheet = Spritesheet('img/terrain.png')
-        self.enemy_spritesheet = Spritesheet('img/enemy.png')
-        self.attack_spritesheet = Spritesheet('img/attack.png')
-        self.attackFire_spritesheet = Spritesheet('img/fireball.png')
-        self.heal_spritesheet = Spritesheet('img/heal.png')
-        self.intro_backgroud = pygame.image.load('img/introbackground.png')
+        self.nganMapSprite = Spritesheet('../res/img/Map1.png')
+        self.character_spritesheet = Spritesheet('../res/img/character.png')
+        self.terrain_spritesheet = Spritesheet('../res/img/terrain.png')
+        self.enemy_spritesheet = Spritesheet('../res/img/enemy.png')
+        self.attack_spritesheet = Spritesheet('../res/img/attack.png')
+        self.attackFire_spritesheet = Spritesheet('../res/img/fireball.png')
+        self.heal_spritesheet = Spritesheet('../res/img/heal.png')
+        self.intro_backgroud = pygame.image.load('../res/img/introbackground.png')
 
     def createTilemap(self):
         level = Level(self, 0, 0)
         self.all_sprites.add(level)
-        self.player = Player(self, 100, 100)
+        info = pygame.display.Info()
+
+        screen_width = info.current_w
+        screen_height = info.current_h
+
+        self.player = Player(self, screen_width / 2, screen_height / 2)
+
         for i, row in enumerate(tilemap):
             for j, col in enumerate(row):
-                # if col == "B":
-                #     Block(self, j, i)
                 if col == "E":
                     Enemy(self, j, i)
 
@@ -125,17 +130,4 @@ class Game:
             self.screen.blit(play_button.image, play_button.rect)
             self.clock.tick(FPS)
             pygame.display.update()
-
-
-g = Game()
-g.intro_screen()
-g.new()
-while g.running:
-    g.main()
-    g.game_over()
-
-pygame.quit()
-sys.exit()
-
-
 
