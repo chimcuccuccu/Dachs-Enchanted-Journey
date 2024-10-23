@@ -1,6 +1,6 @@
 import pygame
 
-from demo_pygame.utilz.config import BLACK
+from BTL_Python_Nhom7.demo_pygame.src.utilz.config import BLACK
 
 
 class Spritesheet:

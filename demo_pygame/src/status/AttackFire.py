@@ -1,7 +1,7 @@
 import pygame
 import math
 
-from demo_pygame.utilz.config import *
+from BTL_Python_Nhom7.demo_pygame.src.utilz.config import *
 
 
 class AttackFire(pygame.sprite.Sprite):

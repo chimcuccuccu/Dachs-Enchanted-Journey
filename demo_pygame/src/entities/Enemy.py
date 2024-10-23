@@ -3,7 +3,7 @@ import random
 import pygame
 import math
 
-from demo_pygame.utilz.config import *
+from BTL_Python_Nhom7.demo_pygame.src.utilz.config import *
 
 
 class Enemy(pygame.sprite.Sprite):

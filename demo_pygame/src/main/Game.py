@@ -1,14 +1,14 @@
 import pygame
 
-from demo_pygame.src.entities.Enemy import Enemy
-from demo_pygame.src.entities.Player import Player
-from demo_pygame.src.entities.SpriteSheet import Spritesheet
-from demo_pygame.src.status.Attack import Attack
-from demo_pygame.src.status.AttackFire import AttackFire
-from demo_pygame.src.status.Heal import Heal
-from demo_pygame.src.ui.Button import Button
-from demo_pygame.utilz.config import *
-from demo_pygame.src.levels.level import *
+from BTL_Python_Nhom7.demo_pygame.src.entities.Enemy import Enemy
+from BTL_Python_Nhom7.demo_pygame.src.entities.Player import Player
+from BTL_Python_Nhom7.demo_pygame.src.entities.SpriteSheet import Spritesheet
+from BTL_Python_Nhom7.demo_pygame.src.status.Attack import Attack
+from BTL_Python_Nhom7.demo_pygame.src.status.AttackFire import AttackFire
+from BTL_Python_Nhom7.demo_pygame.src.status.Heal import Heal
+from BTL_Python_Nhom7.demo_pygame.src.ui.Button import Button
+from BTL_Python_Nhom7.demo_pygame.src.utilz.config import *
+from BTL_Python_Nhom7.demo_pygame.src.levels.level import *
 import sys
 
 class Game:
@@ -20,15 +20,16 @@ class Game:
         screen_height = info.current_h
         self.screen = pygame.display.set_mode((screen_width, screen_height))
         self.clock = pygame.time.Clock()
+
         self.running = True
-        self.nganMapSprite = Spritesheet('../res/img/Map1.png')
-        self.character_spritesheet = Spritesheet('../res/img/character.png')
-        self.terrain_spritesheet = Spritesheet('../res/img/terrain.png')
-        self.enemy_spritesheet = Spritesheet('../res/img/enemy.png')
-        self.attack_spritesheet = Spritesheet('../res/img/attack.png')
-        self.attackFire_spritesheet = Spritesheet('../res/img/fireball.png')
-        self.heal_spritesheet = Spritesheet('../res/img/heal.png')
-        self.intro_backgroud = pygame.image.load('../res/img/introbackground.png')
+        self.nganMapSprite = Spritesheet('../../res/img/Map1.png')
+        self.character_spritesheet = Spritesheet('../../res/img/character.png')
+        self.terrain_spritesheet = Spritesheet('../../res/img/terrain.png')
+        self.enemy_spritesheet = Spritesheet('../../res/img/enemy.png')
+        self.attack_spritesheet = Spritesheet('../../res/img/attack.png')
+        self.attackFire_spritesheet = Spritesheet('../../res/img/fireball.png')
+        self.heal_spritesheet = Spritesheet('../../res/img/heal.png')
+        self.intro_backgroud = pygame.image.load('../../res/img/introbackground.png')
 
     def createTilemap(self):
         level = Level(self, 0, 0)

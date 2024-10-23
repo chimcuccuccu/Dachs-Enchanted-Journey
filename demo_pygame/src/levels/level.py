@@ -2,7 +2,7 @@
 
 import pygame
 
-from demo_pygame.utilz.config import GROUND_LAYER, TILESIZE
+from BTL_Python_Nhom7.demo_pygame.src.utilz.config import GROUND_LAYER, TILESIZE
 
 
 class Level(pygame.sprite.Sprite):
@@ -18,7 +18,7 @@ class Level(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.x = x * TILESIZE
         self.y = y * TILESIZE
-        self.image = pygame.image.load('../res/img/Map1.png').convert_alpha()
+        self.image = pygame.image.load('../../res/img/Map1.png').convert_alpha()
 
         self.rect = self.image.get_rect()
         self.display_surface = pygame.display.get_surface()
@@ -43,7 +43,7 @@ class YSortCameraGroup(pygame.sprite.Group):
         self.offset = pygame.math.Vector2()
 
         #creating the floor
-        self.floor_surf_original = pygame.image.load('../res/img/Map1.png').convert()
+        self.floor_surf_original = pygame.image.load('../../res/img/Map1.png').convert()
         self.floor_rect = self.floor_surf_original.get_rect(topleft=(0,0))
     def custom_draw(self,player):
 
