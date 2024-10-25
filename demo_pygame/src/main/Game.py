@@ -1,14 +1,15 @@
 import pygame
 
-from BTL_Python_Nhom7.demo_pygame.src.entities.Enemy import Enemy
-from BTL_Python_Nhom7.demo_pygame.src.entities.Player import Player
-from BTL_Python_Nhom7.demo_pygame.src.entities.SpriteSheet import Spritesheet
-from BTL_Python_Nhom7.demo_pygame.src.status.Attack import Attack
-from BTL_Python_Nhom7.demo_pygame.src.status.AttackFire import AttackFire
-from BTL_Python_Nhom7.demo_pygame.src.status.Heal import Heal
-from BTL_Python_Nhom7.demo_pygame.src.ui.Button import Button
-from BTL_Python_Nhom7.demo_pygame.src.utilz.config import *
-from BTL_Python_Nhom7.demo_pygame.src.levels.level import *
+from demo_pygame.src.entities.Enemy import Enemy
+from demo_pygame.src.entities.EnemySpawner import EnemySpawner
+from demo_pygame.src.entities.Player import Player
+from demo_pygame.src.entities.SpriteSheet import Spritesheet
+from demo_pygame.src.status.Attack import Attack
+from demo_pygame.src.status.AttackFire import AttackFire
+from demo_pygame.src.status.Heal import Heal
+from demo_pygame.src.ui.Button import Button
+from demo_pygame.src.utilz.config import *
+from demo_pygame.src.levels.level import *
 import sys
 
 class Game:
@@ -41,10 +42,13 @@ class Game:
 
         self.player = Player(self, screen_width / 2, screen_height / 2)
 
-        for i, row in enumerate(tilemap):
-            for j, col in enumerate(row):
-                if col == "E":
-                    Enemy(self, j, i)
+        # for i, row in enumerate(tilemap):
+        #     for j, col in enumerate(row):
+        #         if col == "E":
+        #             Enemy(self, j, i)
+        # Khởi tạo EnemySpawner và spawn 3 kẻ thù ngẫu nhiên
+        spawner = EnemySpawner(self, self.nganMapSprite)
+        spawner.spawn_random_enemies(3)
 
     def new(self):
         self.playing = True

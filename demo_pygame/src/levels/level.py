@@ -2,7 +2,7 @@
 
 import pygame
 
-from BTL_Python_Nhom7.demo_pygame.src.utilz.config import GROUND_LAYER, TILESIZE
+from demo_pygame.src.utilz.config import GROUND_LAYER, TILESIZE
 
 
 class Level(pygame.sprite.Sprite):

@@ -1,6 +1,6 @@
 import sys
 import pygame
-from BTL_Python_Nhom7.demo_pygame.src.main.Game import Game
+from demo_pygame.src.main.Game import Game
 
 g = Game()
 g.intro_screen()

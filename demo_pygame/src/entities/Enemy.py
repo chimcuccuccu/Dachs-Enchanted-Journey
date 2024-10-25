@@ -3,7 +3,7 @@ import random
 import pygame
 import math
 
-from BTL_Python_Nhom7.demo_pygame.src.utilz.config import *
+from demo_pygame.src.utilz.config import *
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -44,17 +44,51 @@ class Enemy(pygame.sprite.Sprite):
         self.y_change = 0
 
     def movement(self):
-        if self.facing == 'left':
-            self.x_change -= ENEMY_SPEED
-            self.movement_loop -= 1
-            if self.movement_loop <= -self.max_travel:
-                self.facing = 'right'
+        # Tính khoảng cách giữa player và enemy
+        distance = math.sqrt(
+            (self.game.player.rect.x - self.rect.x) ** 2 + (self.game.player.rect.y - self.rect.y) ** 2)
 
-        if self.facing == 'right':
-            self.x_change += ENEMY_SPEED
-            self.movement_loop += 1
-            if self.movement_loop >= self.max_travel:
-                self.facing = 'left'
+        # Nếu khoảng cách giữa enemy và player nhỏ hơn 200 pixel thì bám đuổi player
+        if distance < 200:
+            dx = self.game.player.rect.x - self.rect.x
+            dy = self.game.player.rect.y - self.rect.y
+
+            # Xác định ưu tiên hướng di chuyển
+            if abs(dx) > abs(dy):  # Di chuyển theo chiều ngang
+                if dx > 0:
+                    self.x_change = ENEMY_SPEED
+                    self.facing = 'right'
+                else:
+                    self.x_change = -ENEMY_SPEED
+                    self.facing = 'left'
+                self.y_change = 0  # Chỉ di chuyển theo trục x
+            else:  # Di chuyển theo chiều dọc
+                if dy > 0:
+                    self.y_change = ENEMY_SPEED
+                    self.facing = 'down'
+                else:
+                    self.y_change = -ENEMY_SPEED
+                    self.facing = 'up'
+                self.x_change = 0  # Chỉ di chuyển theo trục y
+        else:
+            # Nếu không trong phạm vi, tiếp tục di chuyển như bình thường
+            if self.facing == 'left':
+                self.x_change -= ENEMY_SPEED
+                self.movement_loop -= 1
+                if self.movement_loop <= -self.max_travel:
+                    self.facing = 'right'
+
+            if self.facing == 'right':
+                self.x_change += ENEMY_SPEED
+                self.movement_loop += 1
+                if self.movement_loop >= self.max_travel:
+                    self.facing = 'left'
+            if self.facing == 'up':
+                self.y_change -= ENEMY_SPEED
+            if self.facing == 'down':
+                self.y_change += ENEMY_SPEED
+
+        # Sau khi cập nhật hướng, ta sẽ gọi lại hàm animate để đảm bảo đúng hoạt ảnh
 
     def animate(self):
 
