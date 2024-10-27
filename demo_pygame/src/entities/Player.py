@@ -46,25 +46,21 @@ class Player(pygame.sprite.Sprite):
     def movement(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
-            for sprite in self.groups:
-                sprite.rect.x += PLAYER_SPEED
-            self.x_change -= PLAYER_SPEED
-            self.facing = 'left'
+            if self.rect.left > 0:
+                self.x_change -= PLAYER_SPEED
+                self.facing = 'left'
         if keys[pygame.K_RIGHT]:
-            for sprite in self.groups:
-                sprite.rect.x -= PLAYER_SPEED
-            self.x_change += PLAYER_SPEED
-            self.facing = 'right'
+            if self.rect.right < self.game.map_width:
+                self.x_change += PLAYER_SPEED
+                self.facing = 'right'
         if keys[pygame.K_UP]:
-            for sprite in self.groups:
-                sprite.rect.y += PLAYER_SPEED
-            self.y_change -= PLAYER_SPEED
-            self.facing = 'up'
+            if self.rect.top > 0:
+                self.y_change -= PLAYER_SPEED
+                self.facing = 'up'
         if keys[pygame.K_DOWN]:
-            for sprite in self.groups:
-                sprite.rect.y -= PLAYER_SPEED
-            self.y_change += PLAYER_SPEED
-            self.facing = 'down'
+            if self.rect.bottom < self.game.map_height:
+                self.y_change += PLAYER_SPEED
+                self.facing = 'down'
 
     def collide_enemy(self):
         hits = pygame.sprite.spritecollide(self, self.game.enemies, False)

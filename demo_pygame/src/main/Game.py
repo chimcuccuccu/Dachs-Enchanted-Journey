@@ -31,6 +31,10 @@ class Game:
         self.attackFire_spritesheet = Spritesheet('../../res/img/fireball.png')
         self.heal_spritesheet = Spritesheet('../../res/img/heal.png')
         self.intro_backgroud = pygame.image.load('../../res/img/introbackground.png')
+        self.map_width = 3200
+        self.map_height = 1920
+
+        self.visible_sprites = YSortCameraGroup()
 
     def createTilemap(self):
         level = Level(self, 0, 0)
@@ -42,13 +46,24 @@ class Game:
 
         self.player = Player(self, screen_width / 2, screen_height / 2)
 
-        # for i, row in enumerate(tilemap):
-        #     for j, col in enumerate(row):
-        #         if col == "E":
-        #             Enemy(self, j, i)
+        self.visible_sprites.add(self.player)
+        self.all_sprites.add(self.player)
+
+        # self.visible_sprites.add(self.attacks)
+        self.all_sprites.add(self.attacks)
+
+        # self.visible_sprites.add(self.attacksFire)
+        self.all_sprites.add(self.attacksFire)
+
+        # self.visible_sprites.add(self.heal)
+        self.all_sprites.add(self.heal)
+
         # Khởi tạo EnemySpawner và spawn 3 kẻ thù ngẫu nhiên
         spawner = EnemySpawner(self, self.nganMapSprite)
         spawner.spawn_random_enemies(3)
+        for enemy in self.enemies:
+            self.visible_sprites.add(enemy)
+            self.all_sprites.add(enemy)
 
     def new(self):
         self.playing = True
@@ -66,29 +81,37 @@ class Game:
             if event.type == pygame.QUIT:
                 self.playing = False
                 self.running = False
-
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     if self.player.facing == 'up':
-                        Attack(self, self.player.rect.x, self.player.rect.y - TILESIZE)
+                        attack = Attack(self, self.player.rect.x, self.player.rect.y - TILESIZE)
                     if self.player.facing == 'down':
-                        Attack(self, self.player.rect.x, self.player.rect.y + TILESIZE)
+                        attack = Attack(self, self.player.rect.x, self.player.rect.y + TILESIZE)
                     if self.player.facing == 'left':
-                        Attack(self, self.player.rect.x - TILESIZE, self.player.rect.y)
+                        attack = Attack(self, self.player.rect.x - TILESIZE, self.player.rect.y)
                     if self.player.facing == 'right':
-                        Attack(self, self.player.rect.x + TILESIZE, self.player.rect.y)
+                        attack = Attack(self, self.player.rect.x + TILESIZE, self.player.rect.y)
+                    self.visible_sprites.add(attack) # (*ngan*) cái này để cho mấy cái status hiện lên màn hình á
+                    self.all_sprites.add(attack)
+                    self.attacks.add(attack)        # cái này nữa, mấy cái bên dưới nữa
                 elif event.key == pygame.K_h:
                     direction = self.player.facing
                     if self.player.facing == 'up':
-                        AttackFire(self, self.player.rect.x - 8, self.player.rect.y - TILESIZE, direction)
+                        attack_fire = AttackFire(self, self.player.rect.x - 8, self.player.rect.y - TILESIZE, direction)
                     if self.player.facing == 'down':
-                        AttackFire(self, self.player.rect.x - 8, self.player.rect.y + TILESIZE, direction)
+                        attack_fire = AttackFire(self, self.player.rect.x - 8, self.player.rect.y + TILESIZE, direction)
                     if self.player.facing == 'left':
-                        AttackFire(self, self.player.rect.x - TILESIZE, self.player.rect.y - 8, direction)
+                        attack_fire = AttackFire(self, self.player.rect.x - TILESIZE, self.player.rect.y - 8, direction)
                     if self.player.facing == 'right':
-                        AttackFire(self, self.player.rect.x + TILESIZE, self.player.rect.y - 8, direction)
+                        attack_fire = AttackFire(self, self.player.rect.x + TILESIZE, self.player.rect.y - 8, direction)
+                    self.visible_sprites.add(attack_fire) # nè nè
+                    self.all_sprites.add(attack_fire)
+                    self.attacksFire.add(attack_fire) # đay nữa
                 elif event.key == pygame.K_c:
-                    Heal(self, self.player.rect.x, self.player.rect.y)
+                    heal = Heal(self, self.player.rect.x, self.player.rect.y)
+                    self.visible_sprites.add(heal) # è è
+                    self.all_sprites.add(heal)
+                    self.heal.add(heal)
 
 
     def update(self):
@@ -96,7 +119,7 @@ class Game:
 
     def draw(self):
         self.screen.fill(BLACK)
-        self.all_sprites.draw(self.screen)
+        self.visible_sprites.custom_draw(self.player)
         self.clock.tick(FPS)
         pygame.display.update()
 

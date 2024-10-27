@@ -1,8 +1,7 @@
-# Đừng động vào cái này nhé
-
 import pygame
 
 from demo_pygame.src.utilz.config import GROUND_LAYER, TILESIZE
+from pytmx.util_pygame import load_pygame
 
 
 class Level(pygame.sprite.Sprite):
@@ -26,12 +25,14 @@ class Level(pygame.sprite.Sprite):
         # sprite group setup
         self.visible_sprites = YSortCameraGroup()
         self.obstacle_sprites = pygame.sprite.Group()
+
+
     def run(self):
         # update and draw the game
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
 
-
+#Hàm này để tạo camera cho nhân vật
 class YSortCameraGroup(pygame.sprite.Group):
     def __init__(self):
 
@@ -42,14 +43,20 @@ class YSortCameraGroup(pygame.sprite.Group):
         self.half_height = self.display_surface.get_size()[1] // 2
         self.offset = pygame.math.Vector2()
 
+
         #creating the floor
         self.floor_surf_original = pygame.image.load('../../res/img/Map1.png').convert()
         self.floor_rect = self.floor_surf_original.get_rect(topleft=(0,0))
+
     def custom_draw(self,player):
 
-        # getting the offset
+       # Khởi tạo phần bù
         self.offset.x = player.rect.centerx - self.half_width
         self.offset.y = player.rect.centery - self.half_height
+
+        # Đảm bảo phần bù không ra khỏi ranh giới của map
+        self.offset.x = max(0, min(self.offset.x, self.floor_rect.width - self.display_surface.get_width()))
+        self.offset.y = max(0, min(self.offset.y, self.floor_rect.height - self.display_surface.get_height()))
 
         #drawing the floor
         floor_offset_pos = self.floor_rect.topleft - self.offset
