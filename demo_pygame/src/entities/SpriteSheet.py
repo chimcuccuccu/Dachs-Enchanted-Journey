@@ -17,9 +17,3 @@ class Spritesheet:
         # Thêm phương thức get_size để lấy kích thước của sprite sheet
     def get_size(self):
         return self.sheet.get_size()  # Trả về kích thước của toàn bộ spritesheet
-
-    def get_width(self):
-        return self.sheet.get_width()
-
-    def get_height(self):
-        return self.sheet.get_height()
