@@ -31,6 +31,7 @@ class Game:
         self.attackFire_spritesheet = Spritesheet('../../res/img/fireball.png')
         self.heal_spritesheet = Spritesheet('../../res/img/heal.png')
         self.intro_backgroud = pygame.image.load('../../res/img/introbackground.png')
+        self.obstacles = pygame.sprite.Group()
 
     def createTilemap(self):
         level = Level(self, 0, 0)

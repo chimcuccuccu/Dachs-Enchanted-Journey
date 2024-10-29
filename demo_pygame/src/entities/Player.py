@@ -1,6 +1,7 @@
 import pygame
 import math
 
+from demo_pygame.src.status.Collide import Collide
 from demo_pygame.src.utilz.config import *
 
 class Player(pygame.sprite.Sprite):
@@ -26,7 +27,15 @@ class Player(pygame.sprite.Sprite):
         self.facing = 'down'
         self.animation_loop = 1
 
+        # Thêm thuộc tính máu cho nhân vật
+        self.health = 100  # Máu hiện tại
+        self.max_health = 200  # Máu tối đa
+        self.speed = PLAYER_SPEED
+
+
         self.image = self.game.character_spritesheet.get_sprite(0, 0, self.width, self.height)
+        self.collide = Collide(self)
+
 
         self.rect = self.image.get_rect()
         self.rect.x = self.x
@@ -35,7 +44,9 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         self.movement()
         self.animate()
-        self.collide_enemy()
+        self.collide.collide_enemy()
+        self.collide.Collide_bleeding()
+        self.collide.Collide_ice()
 
         self.rect.x += self.x_change
         self.rect.y += self.y_change
@@ -66,11 +77,6 @@ class Player(pygame.sprite.Sprite):
             self.y_change += PLAYER_SPEED
             self.facing = 'down'
 
-    def collide_enemy(self):
-        hits = pygame.sprite.spritecollide(self, self.game.enemies, False)
-        if hits:
-            self.kill()
-            self.game.playing = False
 
     def animate(self):
         down_animations = [self.game.character_spritesheet.get_sprite(64, 0, self.width, self.height),

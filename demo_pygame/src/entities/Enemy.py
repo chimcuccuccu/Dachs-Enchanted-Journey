@@ -33,6 +33,12 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
+        # Thiết lập các thuộc tính cho trạng thái tấn công
+        self.attack_range = 50  # Phạm vi tấn công (pixel)
+        self.attack_damage = 10  # Sát thương mỗi lần tấn công
+        self.attack_cooldown = 1000  # Thời gian hồi mỗi lần tấn công (ms)
+        self.last_attack_time = 0  # Thời gian của lần tấn công trước đó
+
     def update(self):
         self.movement()
         self.animate()
