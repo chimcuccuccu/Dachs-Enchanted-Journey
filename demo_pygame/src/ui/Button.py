@@ -1,33 +1,38 @@
 import pygame
 
-class Button:
-    def __init__(self, x, y, width, height, fg, bg, content, fontsize):
-        self.font = pygame.font.Font(None, fontsize)
-        self.content = content
+class Button():
+    def __init__(self, image, pos, base_image, hover_image, text_input=None, font=None, base_color="White", hovering_color="Green", text_offset = (0, 0)):
+        self.image = image
+        self.base_image = base_image
+        self.hover_image = hover_image
+        self.x_pos = pos[0]
+        self.y_pos = pos[1]
+        self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
+        self.text_input = text_input
+        self.font = font
+        self.base_color = base_color
+        self.hovering_color = hovering_color
+        self.text_offset = text_offset
+        self.text = self.font.render(self.text_input, True, self.base_color) if self.text_input else None
+        if self.text:
+            self.text_rect = self.text.get_rect(center=(self.x_pos + self.text_offset[0], self.y_pos + self.text_offset[1]))
 
-        self.x = x
-        self.y = y
+    def update(self, screen):
+        screen.blit(self.image, self.rect)
+        if self.text:
+            screen.blit(self.text, self.text_rect)
 
-        self.width = width
-        self.height = height
-
-        self.fg = fg
-        self.bg = bg
-
-        self.image = pygame.Surface((self.width, self.height))
-        self.image.fill(self.fg)
-        self.rect = self.image.get_rect()
-
-        self.rect.x = self.x
-        self.rect.y = self.y
-
-        self.text = self.font.render(self.content, True, self.bg)
-        self.text_rect = self.text.get_rect(center=(self.width / 2, self.height / 2))
-        self.image.blit(self.text, self.text_rect)
-
-    def is_pressed(self, pos, pressed):
-        if self.rect.collidepoint(pos):
-            if pressed[0]:
-                return True
-            return False
+    def checkForInput(self, position):
+        if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
+            return True
         return False
+
+    def changeColor(self, position):
+        if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
+            self.image = self.hover_image
+            if self.text:
+                self.text = self.font.render(self.text_input, True, self.hovering_color)
+        else:
+            self.image = self.base_image
+            if self.text:
+                self.text = self.font.render(self.text_input, True, self.base_color)
