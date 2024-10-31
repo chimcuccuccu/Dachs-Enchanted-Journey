@@ -1,9 +1,9 @@
 import pygame, sys
 
-from Button import *
+from demo_pygame.src.ui.Button import *
 import cv2
 from demo_pygame.src.main.Game import Game
-from demo_pygame.src.utilz.config import WIN_WIDTH, WIN_HEIGHT
+from demo_pygame.src.utilz.Config import WIN_WIDTH, WIN_HEIGHT
 
 pygame.init()
 pygame.font.init()
@@ -134,7 +134,7 @@ def main_menu():
                     sys.exit()
 
         pygame.display.update()
-        clock.tick(60)
+        clock.tick(200)
 
 def game_over_screen():
     while True:
@@ -164,25 +164,12 @@ def game_over_screen():
         QUIT_BUTTON = Button(image=base_image, pos=(button_x - 300, button_y + 100), base_image=base_image, hover_image=hover_image,
                              text_input="NO", font=get_font_button(60), base_color="#a4925f", hovering_color="#a4925f", text_offset=(0, 0))
 
-        base_home_image = pygame.image.load("../../res/Buttons/Home_Default.png")
-        base_home_image = pygame.transform.scale(base_home_image, (100, 100))
-
-        hover_home_image = pygame.image.load('../../res/Buttons/Home_Hover.png')
-        hover_home_image = pygame.transform.scale(hover_home_image, (100, 100))
-
-        BACK_BUTTON = Button(image=base_home_image, pos=(button_x, button_y + 200), base_image=base_home_image,
-                             hover_image=hover_home_image,
-                             text_input= None, font=get_font_button(50), base_color="#a4925f",
-                             hovering_color="#a4925f", text_offset=(0, 0))
-
         MOUSE_POS = pygame.mouse.get_pos()
 
         RESTART_BUTTON.changeColor(MOUSE_POS)
         RESTART_BUTTON.update(SCREEN)
         QUIT_BUTTON.changeColor(MOUSE_POS)
         QUIT_BUTTON.update(SCREEN)
-        BACK_BUTTON.changeColor(MOUSE_POS)
-        BACK_BUTTON.update(SCREEN)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -193,9 +180,6 @@ def game_over_screen():
                     play()
                     return
                 if QUIT_BUTTON.checkForInput(MOUSE_POS):
-                    pygame.quit()
-                    sys.exit()
-                if BACK_BUTTON.checkForInput(MOUSE_POS):
                     main_menu()
                     return
 
