@@ -1,7 +1,7 @@
 import pygame
 import math
 
-from demo_pygame.src.utilz.config import *
+from demo_pygame.src.utilz.Config import *
 
 
 class AttackFire(pygame.sprite.Sprite):
@@ -37,6 +37,7 @@ class AttackFire(pygame.sprite.Sprite):
          hits = pygame.sprite.spritecollide(self, self.game.enemies, True)
 
     def animate(self):
+        # direction = self.game.player.facing
 
         right_animations = [self.game.attackFire_spritesheet.get_sprite(0, 48, self.width + 16, self.height + 16),
                             self.game.attackFire_spritesheet.get_sprite(48, 48, self.width + 16, self.height + 16),
