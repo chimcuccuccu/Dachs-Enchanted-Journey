@@ -1,7 +1,7 @@
 import pygame
 import math
 
-from demo_pygame.src.utilz.config import *
+from demo_pygame.src.utilz.Config import *
 
 
 class AttackFire(pygame.sprite.Sprite):
@@ -16,6 +16,9 @@ class AttackFire(pygame.sprite.Sprite):
         self.width = TILESIZE
         self.height = TILESIZE
 
+        self.map_width = 3200
+        self.map_height = 1920
+
         self.direction = direction
         self.animation_loop = 0
 
@@ -29,14 +32,15 @@ class AttackFire(pygame.sprite.Sprite):
         self.collide()
         self.move()
 
-        if self.rect.right < 0 or self.rect.left > self.game.screen.get_width() or \
-                self.rect.bottom < 0 or self.rect.top > self.game.screen.get_height():
+        if self.rect.right < 0 or self.rect.left > self.map_width or \
+                self.rect.bottom < 0 or self.rect.top > self.map_height:
             self.kill()
 
     def collide(self):
          hits = pygame.sprite.spritecollide(self, self.game.enemies, True)
 
     def animate(self):
+        # direction = self.game.player.facing
 
         right_animations = [self.game.attackFire_spritesheet.get_sprite(0, 48, self.width + 16, self.height + 16),
                             self.game.attackFire_spritesheet.get_sprite(48, 48, self.width + 16, self.height + 16),
