@@ -1,13 +1,14 @@
 import pygame
 import math
 
-from demo_pygame.src.utilz.config import *
+from demo_pygame.src.utilz.Config import *
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, game, x, y):
+    def __init__(self, game, x, y, scale_factor=1.3):
         self.game = game
         self._layer = PLAYER_LAYER
         self.groups = self.game.all_sprites
+        self.scale_factor = scale_factor
         pygame.sprite.Sprite.__init__(self, self.groups)
         # super().__init__(self.groups)
 
@@ -38,7 +39,48 @@ class Player(pygame.sprite.Sprite):
         self.collide_enemy()
 
         self.rect.x += self.x_change
+        for collidable in self.game.collidables:
+            if self.rect.colliderect(collidable.rect):
+                if self.x_change > 0:  # Moving right
+                    self.rect.right = collidable.rect.left
+                elif self.x_change < 0:  # Moving left
+                    self.rect.left = collidable.rect.right
+                break  # Stop checking further for efficiency
+
         self.rect.y += self.y_change
+        for collidable in self.game.collidables:
+            if self.rect.colliderect(collidable.rect):
+                if self.y_change > 0:  # Moving down
+                    self.rect.bottom = collidable.rect.top
+                elif self.y_change < 0:  # Moving up
+                    self.rect.top = collidable.rect.bottom
+                break  # Stop checking further for efficiency
+
+        self.x_change = 0
+        self.y_change = 0
+
+    def update(self):
+        self.movement()
+        self.animate()
+        self.collide_enemy()
+
+        self.rect.x += self.x_change
+        for collidable in self.game.collidables:
+            if self.rect.colliderect(collidable.rect):
+                if self.x_change > 0:  # Moving right
+                    self.rect.right = collidable.rect.left
+                elif self.x_change < 0:  # Moving left
+                    self.rect.left = collidable.rect.right
+                break  # Stop checking further for efficiency
+
+        self.rect.y += self.y_change
+        for collidable in self.game.collidables:
+            if self.rect.colliderect(collidable.rect):
+                if self.y_change > 0:  # Moving down
+                    self.rect.bottom = collidable.rect.top
+                elif self.y_change < 0:  # Moving up
+                    self.rect.top = collidable.rect.bottom
+                break  # Stop checking further for efficiency
 
         self.x_change = 0
         self.y_change = 0
@@ -64,9 +106,9 @@ class Player(pygame.sprite.Sprite):
 
     def collide_enemy(self):
         hits = pygame.sprite.spritecollide(self, self.game.enemies, False)
-        if hits:
-            self.kill()
-            self.game.playing = False
+        # if hits:
+        #     self.kill()
+        #     self.game.playing = False
 
     def animate(self):
         down_animations = [self.game.character_spritesheet.get_sprite(64, 0, self.width, self.height),
@@ -120,3 +162,5 @@ class Player(pygame.sprite.Sprite):
                 self.animation_loop += 0.1
                 if self.animation_loop >= 3:
                     self.animation_loop = 1
+
+        self.image = pygame.transform.scale(self.image, (self.width * self.scale_factor, self.height * self.scale_factor))

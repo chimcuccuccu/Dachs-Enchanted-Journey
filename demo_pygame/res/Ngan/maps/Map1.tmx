@@ -1,97 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="69">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="23" nextobjectid="439">
  <editorsettings>
-  <export target="map_bound.csv" format="csv"/>
+  <export target="Map1.tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" name="walls" tilewidth="16" tileheight="16" tilecount="64" columns="8">
-  <image source="../tài nguyên Py/mystic_woods_free_2.2/sprites/tilesets/walls/walls.png" width="128" height="128"/>
+  <image source="../../../../../Ngan/tài nguyên Py/mystic_woods_free_2.2/sprites/tilesets/walls/walls.png" width="128" height="128"/>
  </tileset>
  <tileset firstgid="65" name="wooden_door_b" tilewidth="16" tileheight="16" tilecount="2" columns="2">
-  <image source="../tài nguyên Py/mystic_woods_free_2.2/sprites/tilesets/walls/wooden_door_b.png" width="32" height="16"/>
+  <image source="../../../../../Ngan/tài nguyên Py/mystic_woods_free_2.2/sprites/tilesets/walls/wooden_door_b.png" width="32" height="16"/>
  </tileset>
  <tileset firstgid="67" name="grass" tilewidth="16" tileheight="16" tilecount="1" columns="1">
-  <image source="../tài nguyên Py/mystic_woods_free_2.2/sprites/tilesets/grass.png" width="16" height="16"/>
+  <image source="../../../../../Ngan/tài nguyên Py/mystic_woods_free_2.2/sprites/tilesets/grass.png" width="16" height="16"/>
  </tileset>
  <tileset firstgid="68" name="flooring" tilewidth="16" tileheight="16" tilecount="15" columns="5">
-  <image source="../tài nguyên Py/mystic_woods_free_2.2/sprites/tilesets/floors/flooring.png" width="80" height="48"/>
+  <image source="../../../../../Ngan/tài nguyên Py/mystic_woods_free_2.2/sprites/tilesets/floors/flooring.png" width="80" height="48"/>
  </tileset>
  <tileset firstgid="83" name="objects" tilewidth="16" tileheight="16" tilecount="208" columns="16">
-  <image source="../tài nguyên Py/mystic_woods_free_2.2/sprites/objects/objects.png" width="256" height="208"/>
+  <image source="../../../../../Ngan/tài nguyên Py/mystic_woods_free_2.2/sprites/objects/objects.png" width="256" height="208"/>
  </tileset>
  <tileset firstgid="291" name="TX Props" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
-  <image source="../tài nguyên Py/Pixel Art Top Down - Basic/Texture/TX Props.png" width="512" height="512"/>
+  <image source="../../../../../Ngan/tài nguyên Py/Pixel Art Top Down - Basic/Texture/TX Props.png" width="512" height="512"/>
  </tileset>
  <tileset firstgid="1315" name="Interiors_free_16x16" tilewidth="16" tileheight="16" tilecount="1424" columns="16">
-  <image source="../tài nguyên Py/Modern_Interiors_Free_v2.2/Modern tiles_Free/Interiors_free/16x16/Interiors_free_16x16.png" width="256" height="1424"/>
+  <image source="../../../../../Ngan/tài nguyên Py/Modern_Interiors_Free_v2.2/Modern tiles_Free/Interiors_free/16x16/Interiors_free_16x16.png" width="256" height="1424"/>
  </tileset>
  <tileset firstgid="2739" name="plains" tilewidth="16" tileheight="16" tilecount="72" columns="6">
-  <image source="../tài nguyên Py/mystic_woods_free_2.2/sprites/tilesets/plains.png" width="96" height="192"/>
+  <image source="../../../../../Ngan/tài nguyên Py/mystic_woods_free_2.2/sprites/tilesets/plains.png" width="96" height="192"/>
  </tileset>
  <tileset firstgid="2811" name="fences" tilewidth="16" tileheight="16" tilecount="16" columns="4">
-  <image source="../tài nguyên Py/mystic_woods_free_2.2/sprites/tilesets/fences.png" width="64" height="64"/>
+  <image source="../../../../../Ngan/tài nguyên Py/mystic_woods_free_2.2/sprites/tilesets/fences.png" width="64" height="64"/>
  </tileset>
  <tileset firstgid="2827" name="spr_grass_tileset" tilewidth="16" tileheight="16" tilecount="870" columns="30">
-  <image source="../tài nguyên Py/Pixelarium - GrassLands - Free Version/Pixelarium - GrassLands - Free Version/Pack content/Sprites/Tileset/spr_grass_tileset.png" width="480" height="464"/>
+  <image source="../../../../../Ngan/tài nguyên Py/Pixelarium - GrassLands - Free Version/Pixelarium - GrassLands - Free Version/Pack content/Sprites/Tileset/spr_grass_tileset.png" width="480" height="464"/>
  </tileset>
  <tileset firstgid="3697" name="Outdoor_Decor_Free" tilewidth="16" tileheight="16" tilecount="84" columns="7">
-  <image source="../tài nguyên Py/Cute_Fantasy_Free/Cute_Fantasy_Free/Outdoor decoration/Outdoor_Decor_Free.png" width="112" height="192"/>
+  <image source="../../../../../Ngan/tài nguyên Py/Cute_Fantasy_Free/Cute_Fantasy_Free/Outdoor decoration/Outdoor_Decor_Free.png" width="112" height="192"/>
  </tileset>
  <tileset firstgid="3781" name="player" tilewidth="16" tileheight="16" tilecount="540" columns="18">
-  <image source="../tài nguyên Py/mystic_woods_free_2.2/sprites/characters/player.png" width="288" height="480"/>
+  <image source="../../../../../Ngan/tài nguyên Py/mystic_woods_free_2.2/sprites/characters/player.png" width="288" height="480"/>
  </tileset>
  <tileset firstgid="4321" source="../Objects.tsx"/>
  <layer id="1" name="grass" width="50" height="30">
   <data encoding="base64" compression="zlib">
-   eJztw0ENAAAMA6HzVv+eJmJfSFg1VVVVVVX19QC8vIik
+   eJztz7kRgDAUA1FFLoKjAY4GMETuvycUO3BCAN+sZl6uLZIKUHm6t///qWNI0miTzenbHa2mxd9X22wP3HH4e7bTrsAdUX732gEAAAAAAGK6Abd3cuI=
   </data>
  </layer>
  <layer id="2" name="street" width="50" height="30">
   <data encoding="base64" compression="zlib">
-   eJztmMEOwiAMhjnz/o+CzqAz6pPJQRKChZZSXIk06W10fB1tf2YMbt4acw1+s4SHDzIX9nZC/D4BR8w1xWfk2II/M39NyKE595DlHBsj95Qai34elB+fMXDOjoYa8wLv8LZcU9EvE3HU1o+eQYvjO8YIDvdZh/UH7RzUdf/CIaW/juaQmg1aOGqzgaK/tHD09svFsTgk3i8VJ91fTTtTOXak91LnbQ9HrT9K9V3qd2/leAB9EdLOGAcUh6PHJXUiFKtXl7TWYX4+OfdDSY6oV6j/hErnc2ewSHG4ZP+t9VFiod7vS7nzjHg5Qy8H10scUjEhw/pFrYdo4uAYxp7qUk6eWrXuL+wNxHOoJw==
+   eJztmMEOwiAMhjnz/o+CzqAz6pPJQRKChZZSXIk06W0t+zpafmYMbt4acw1+s4SHDzIX3u2E+H0Cjlhris/IsQV/Zv6akENz7SHLOTZG7Sk9Fv08qD4+Y+DsHQ095gXW8LbcU9EvE3HU4kefQYvjO8cIDveJw+aDdg5q3L9wSOmvozmkzgYtHLWzgaK/tHD0zsvFsTgk1pfKE+N2YE6mZyOVA8rTosd7ObD5KDV3qd+9leMBzEVIO2McUB6OHpfUiVCuXl3S2of5/uTcDyU5ol6h/hMq7c+dwSLF4ZL3b+2PEgv1fl+qnWfkyxl6Obhe4pDKCRk2L2ozRBMHxzD2VJdy6tSqdX9hb9RTqCk=
   </data>
  </layer>
  <layer id="3" name="floor" width="50" height="30">
   <data encoding="base64" compression="zlib">
-   eJztz0kKgEAMBdHczREH9P6nMcuANBppSFrqwV9klxIB7nrd8HFjwL8li2OTbjb3GvBviadj0+2Ss8PyNLXecZidMW8+etPRgr90AAAA1NBFP1AJHbnQkQsdQD4XUsUcNg==
+   eJztz0sKgDAMRdEsrlrxg93/aswwIEXjJKbcA2+QWa4IcFd008fNAf/2rI5V3WLuLeDfHk/Hrjvknx2Wpyl7x2nWYt589KYjg1E6AAAAAABAThff5xph
   </data>
  </layer>
- <layer id="4" name="wall_house" width="50" height="30" visible="0">
+ <layer id="4" name="wall_house" width="50" height="30">
   <data encoding="base64" compression="zlib">
-   eJzt0kEKgCAQheG37hhZLbRLeHDvVhAiuNR0KP4P3mJ2j5mR8Kb9jmvMYdAXmGlV+Xd8T1C532bc5e+8nn3nxGo+7aoBAIAOabFuAAAARrsAyD0Fkw==
+   eJzt0jsKgEAMBNA5i7/C9f7nUxBZsLAQcVHegynSDUkSnjRu6W9matAX3tSl/jvfU1LvNzTu8ndz9n0fyWleGvUCAAAArq2bXQSL
   </data>
  </layer>
- <layer id="5" name="top_wall_house" width="50" height="30" visible="0">
+ <layer id="16" name="door" width="50" height="30" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztzjEBAAAIA6Bls38oK+zTAxKQAACfzXUAAAAAqCwoNABD
+  </data>
+ </layer>
+ <layer id="5" name="top_wall_house" width="50" height="30">
   <data encoding="base64" compression="zlib">
    eJzt1EsKgDAMRdHgbyDqwLoj978nCyp0oEibqlHugTdrIK9FRWwofMrEVC/se6ZVzHbZttCjh60eo4/b0kTOWuoRGiLPf7VHLet/an+/6faN0lz16B/ZQmRWzoffylGs3j8AAAAAAPiHBWOkAjA=
   </data>
  </layer>
- <layer id="6" name="decor" width="50" height="30" visible="0">
+ <layer id="6" name="decor" width="50" height="30">
   <data encoding="base64" compression="zlib">
-   eJzlWDtvE0EQPgnJr8hHCwnmIah4VHTEAQEltPAHEI+S4AIq5FRQISEaOhCYmgKokOIqJfALEgl+BgGZb5Wd3Hg8sw/7UvFJq9u9m935Zmdmd+yiSMPXTvE2UTQZ39C+171oBHXZMSyr/jbajiH3sbX3fNgsilvo3/bjV3h+wrvPaPfbRfGgPcuTt3F39t08vAdlXIbw1D+/gOvY8x6C71307/nxh1Yl/xg2PFHsmIenRE/hfSdx7gv/3ALXHy1dZou9fwYbni9gx2/4arerfxuVtg9yfJOKq2LNHDuOYO7RGjiF7FpFPPWbe/3lRlGsoB1D6zWm5S4Kv1l2DA1dI/9+o6zmx/Jr7H2oxd5PfPvFfHwDNtz0dpwF93No59EuCDuuJ9qRirERZ5oOzY6Jm8/eT5pV/xK4r6L10dYaM1NVHSnQ4oHmb4PPTleXC+n4gzl/2V4cxj6/FPPlWEPKfm4E1nEciffAyPWQHcuQXxFzXkfGFg8+HmWeORZHfmfnxu6bKvemxgTpQ0uHxpnz4veCxZHf2ZbM6VKvUXY7+/P2xyche8rz0nzIdYTix6olUvbaknH6tHUnwg43vgzZK2hnFI50Rro+P0tS72FaQ+PHQTr43ofukENL0/No7Px3zc+Tfgztp7wPtG8p5wQhVB86SNto7XX/nt/hcq2YHeksZ2HdpRKcP88DzY8WJFe3Zq/Uv4UQqr04QjnoQHnA9cf8yGU5BmIdvkcWQrVXbD94Pm6yvdD22ALJhu4v2qN5f8fFcoh0v8PzPeORGg/8vHKwzhlCzL9WzFh8YvV8zhlykHk+7zrE36qlc3XIdbQm52ix9yjht6LjuJlRO8ucrfv/EC32SMe6sOc4xicUG3ntLEG+4uca1yFR538zVpz3wWONcZH3jVazxuJK8k45syW/3JqY0ELd0UbrLE33pf+stXjecN459VUKSAflSc45JKHlGtdxkLB+tztOoTOE6reU/9NSzqSc82oRaHmf47uYbM5ai8SkzPv/Cf8AEp06Cw==
+   eJzlWDtPVEEUvgnJvgiXFnkJkQq1opNFopTawh8wqCWPQiqzVlqRGBs7E1lqC6CFakvwFyyJ/gwWsn43O5M9nD3zurPukvAlJ/O4c2a+M+ecmdlNkuHhHHIxxPVjUEu79Sbk0jDuV6lTbhWTZB31DdX+hvIIfceQd+UkeV+2r3c2Fsu4g93UPUbjoypPwPVM8a6B7ybqb1X7sNQd/wE27DnsyIsZgfcbT919VTbA9XdJHtMg/Z9hw5cIO67gq5bBX/XU7IMQ31BMFpJkCjINmSnc/vYi55wZJqD7IEJfw2bXMuKpWuzUF8H9MeQJ5CmzY8ngN46aYa266v9k+C7ll+6TYu8Pvv0lOq9gw2tlxzNwX4ZUISvMjjVPO3wRci5IdrQzfdLfLkZTcsIWD03wuRxzj+O4hs4N2Ytx7PNXps/bEnz20xRDGpr3riXXTZjE+Cmm893R9kG9T2dOzJ39I7W3uQ9NkDhTXj73gu3ONs2r0ar0tufAaV7xknxIYYsfX14hyNaT5m1XetvPMXYVsiBwpLlBzxLfe5jPQflJoHtvi9ORUbn9CDov09658vKk30LOXZdPuW167m3VT+/w/xEfJpjuUg7Kn+aBRp4zI5tTuq9csL29KFxnuM4Dirx7z/0r7RFHzNuL5uOpZS98zn7bGL1Hee8EVw7ptX+iPMixF3x+l89d/nXpc7j2t1+/6YYFE/9B2iXF3o7Hb8WMoy03OHxyNga22Ntm686i/VDgQt/OHNon0rkmoZ//zZjioQoeK4QLv29Mb1YbOG+fM5vzy/s7vIR3RxlSGb1d5/7z4UF5h7yvQqDzJCZfpVwbJCTuLk6h77e7AinvQ+xwjQ2ZKyYmed7fJ/wDNsyL9Q==
   </data>
  </layer>
- <objectgroup id="15" name="Tree" visible="0">
-  <object id="14" gid="4323" x="736" y="176.667" width="80" height="80"/>
-  <object id="23" gid="4321" x="725.333" y="303.333" width="80" height="80"/>
-  <object id="24" gid="4321" x="654.667" y="402" width="80" height="80"/>
-  <object id="25" gid="4321" x="453.333" y="208.667" width="80" height="80"/>
-  <object id="26" gid="4321" x="233.333" y="317.333" width="80" height="80"/>
-  <object id="27" gid="4321" x="66" y="390" width="80" height="80"/>
-  <object id="28" gid="4321" x="104" y="168" width="80" height="80"/>
-  <object id="29" gid="4321" x="319.333" y="439.333" width="80" height="80"/>
-  <object id="30" gid="4321" x="324.667" y="61.3333" width="80" height="80"/>
-  <object id="33" gid="4321" x="468.667" y="340" width="80" height="80"/>
-  <object id="35" gid="4323" x="530.667" y="256" width="80" height="80"/>
-  <object id="36" gid="4323" x="569.333" y="213.333" width="80" height="80"/>
-  <object id="37" gid="4323" x="742.667" y="471.333" width="80" height="80"/>
-  <object id="43" gid="4323" x="527.333" y="492" width="80" height="80"/>
-  <object id="47" gid="4323" x="481.333" y="492.667" width="80" height="80"/>
-  <object id="48" gid="4323" x="426.667" y="494" width="80" height="80"/>
-  <object id="51" gid="4323" x="300" y="236.667" width="80" height="80"/>
-  <object id="52" gid="4323" x="226" y="84.6667" width="80" height="80"/>
-  <object id="53" gid="4323" x="42.6667" y="194" width="80" height="80"/>
-  <object id="65" gid="4324" x="42.6667" y="303.333" width="80" height="80"/>
-  <object id="66" gid="4324" x="465.333" y="99.3333" width="80" height="80"/>
-  <object id="67" gid="4324" x="346.667" y="336" width="80" height="80"/>
+ <objectgroup id="21" name="Tree">
+  <object id="285" name="Tree-Tall" gid="4321" x="448" y="464" width="23" height="42"/>
+  <object id="286" name="Tree-Tall" gid="4321" x="480" y="464" width="23" height="42"/>
+  <object id="287" name="Tree-Tall" gid="4321" x="512" y="464" width="23" height="42"/>
+  <object id="288" name="Tree-Tall" gid="4321" x="752" y="160" width="23" height="42"/>
+  <object id="289" name="Tree-Tall" gid="4321" x="592" y="192" width="23" height="42"/>
+  <object id="290" name="Tree-Tall" gid="4321" x="704" y="304" width="23" height="42"/>
+  <object id="291" name="Tree-Tall" gid="4321" x="688" y="384" width="23" height="42"/>
+  <object id="292" name="Tree-Big" gid="4323" x="464" y="192" width="45" height="68"/>
+  <object id="293" name="Tree-Big" gid="4323" x="336" y="64" width="45" height="68"/>
+  <object id="294" name="Tree-Big" gid="4323" x="192" y="160" width="45" height="68"/>
+  <object id="295" name="Tree-Big" gid="4323" x="368" y="432" width="45" height="68"/>
+  <object id="296" name="Tree-Big" gid="4323" x="320" y="240" width="45" height="68"/>
+  <object id="297" name="Tree-Big" gid="4323" x="112" y="128" width="45" height="68"/>
+  <object id="298" name="Tree-Big" gid="4323" x="176" y="400" width="45" height="68"/>
+  <object id="300" name="Tree-Tall" gid="4321" x="64" y="288" width="23" height="42"/>
+  <object id="304" name="Tree-Tall" gid="4321" x="368" y="304" width="23" height="42"/>
+  <object id="305" name="Tree-Tall" gid="4321" x="528" y="256" width="23" height="42"/>
+  <object id="311" name="Tree-Tall" gid="4321" x="473" y="346" width="23" height="42"/>
+  <object id="312" name="Tree-Tall" gid="4321" x="592" y="192" width="23" height="42"/>
+  <object id="316" name="Tree-Min" gid="4324" x="544" y="336" width="33" height="32"/>
+  <object id="317" name="Tree-Min" gid="4324" x="752" y="304" width="33" height="32"/>
+  <object id="318" name="Tree-Min" gid="4324" x="448" y="64" width="33" height="32"/>
+  <object id="319" name="Tree-Min" gid="4324" x="256" y="64" width="33" height="32"/>
+  <object id="320" name="Tree-Min" gid="4324" x="128" y="192" width="33" height="32"/>
+  <object id="321" name="Tree-Min" gid="4324" x="80" y="160" width="33" height="32"/>
+  <object id="322" name="Tree-Min" gid="4324" x="80" y="368" width="33" height="32"/>
+  <object id="323" name="Tree-Min" gid="4324" x="240" y="288" width="33" height="32"/>
+  <object id="324" name="Tree-Min" gid="4324" x="304" y="384" width="33" height="32"/>
+  <object id="325" name="Tree-Min" gid="4324" x="768" y="432" width="33" height="32"/>
+  <object id="326" name="Tree-Min" gid="4324" x="304" y="464" width="33" height="32"/>
+  <object id="327" name="Tree-Min" gid="4324" x="688" y="480" width="33" height="32"/>
+  <object id="409" name="Wall" x="791" y="16" width="9" height="96"/>
+  <object id="412" name="Wall" x="728" y="109" width="72" height="19"/>
+  <object id="414" name="Wall" x="728" y="128.333" width="8" height="32.3333"/>
+  <object id="416" name="Wall" x="671.44" y="141.667" width="56.3499" height="18.9583"/>
+  <object id="418" name="Wall" x="592.5" y="140.767" width="57.6818" height="19.7157"/>
+  <object id="420" name="Wall" x="592.25" y="77.25" width="7.25" height="63.75"/>
+  <object id="422" name="Wall" x="544.75" y="76" width="47.5" height="20.5"/>
+  <object id="423" name="Wall" x="544.25" y="10.75" width="8" height="65"/>
+  <object id="424" name="Wall" x="551.667" y="13" width="239.667" height="13.75"/>
+  <object id="426" name="Decor" x="560.727" y="33.2727" width="15.0909" height="29.8182"/>
+  <object id="427" name="Decor" x="592" y="37.4545" width="15.6364" height="20.3636"/>
+  <object id="428" name="Decor" x="610.727" y="25.2727" width="10.1818" height="30.9091"/>
+  <object id="429" name="Decor" x="608.909" y="80.9091" width="14.7273" height="25.4545"/>
+  <object id="430" name="Decor" x="626.182" y="88.1818" width="11.0909" height="13.6364"/>
+  <object id="431" name="Decor" x="634.545" y="81.4545" width="3.27273" height="7.81818"/>
+  <object id="432" name="Decor" x="610" y="116" width="11.8182" height="21.0909"/>
+  <object id="433" name="Decor" x="658" y="33.6364" width="28" height="11.2727"/>
+  <object id="434" name="Decor" x="705.818" y="34.7273" width="12.1818" height="21.8182"/>
+  <object id="435" name="Decor" x="753.455" y="32.7273" width="30.3636" height="22.9091"/>
+  <object id="436" name="Decor" x="769.455" y="64" width="12.1818" height="14.9091"/>
+  <object id="437" name="Decor" x="770.182" y="87.0909" width="12" height="13.6364"/>
  </objectgroup>
 </map>
