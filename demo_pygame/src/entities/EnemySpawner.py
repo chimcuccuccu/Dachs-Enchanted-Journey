@@ -1,7 +1,6 @@
 import random
-import pygame
 from demo_pygame.src.entities.Enemy import Enemy
-from demo_pygame.src.utilz.config import *
+from demo_pygame.src.utilz.Config import *
 
 class EnemySpawner:
     def __init__(self, game, map_image):

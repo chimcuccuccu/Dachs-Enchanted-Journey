@@ -1,10 +1,6 @@
-from distutils.core import setup
-
 import pygame
 
-from demo_pygame.src.utilz.Generic import Generic
-from demo_pygame.src.utilz.config import GROUND_LAYER, TILESIZE, HOUSE_FLOOR
-from pytmx.util_pygame import load_pygame
+from demo_pygame.src.utilz.Config import GROUND_LAYER, TILESIZE
 
 
 class Level(pygame.sprite.Sprite):
@@ -14,34 +10,22 @@ class Level(pygame.sprite.Sprite):
         screen_height = info.current_h
         self.game = game
         self._layer = GROUND_LAYER
-        self.groups = self.game.all_sprites, self.game.level
+        self.groups = self.game.all_sprites
 
 
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.x = x * TILESIZE
         self.y = y * TILESIZE
-        self.image = pygame.image.load('../../res/Ngan/maps/Ground.png').convert_alpha()
+        self.image = pygame.image.load('../../res/img/Map1.png').convert_alpha()
 
         self.rect = self.image.get_rect()
         self.display_surface = pygame.display.get_surface()
 
         # sprite group setup
         self.visible_sprites = YSortCameraGroup()
-        self.all_sprites = YSortCameraGroup()
         self.obstacle_sprites = pygame.sprite.Group()
 
-    def setup(self):
-        tmx_data = load_pygame('../../res/Ngan/maps/Map1.tmx')
 
-        for x, y, surf in tmx_data.get_layer_by_name('floor').tiles():
-            Generic((x * TILESIZE, y * TILESIZE), surf, self.all_sprites, HOUSE_FLOOR)
-
-        Generic (
-            pos = (0, 0),
-            surf = pygame.image.load('../../res/Ngan/maps/Ground.png').convert_alpha(),
-            groups= self.all_sprites,
-            z = GROUND_LAYER
-        )
     def run(self):
         # update and draw the game
         self.visible_sprites.custom_draw(self.player)
@@ -60,7 +44,7 @@ class YSortCameraGroup(pygame.sprite.Group):
 
 
         #creating the floor
-        self.floor_surf_original = pygame.image.load('../../res/Ngan/maps/Ground.png').convert()
+        self.floor_surf_original = pygame.image.load('../../res/img/Map1.png').convert()
         self.floor_rect = self.floor_surf_original.get_rect(topleft=(0,0))
 
     def custom_draw(self,player):
@@ -74,17 +58,10 @@ class YSortCameraGroup(pygame.sprite.Group):
         self.offset.y = max(0, min(self.offset.y, self.floor_rect.height - self.display_surface.get_height()))
 
         #drawing the floor
-        # floor_offset_pos = self.floor_rect.topleft - self.offset
-        # self.display_surface.blit(self.floor_surf_original, floor_offset_pos)
+        floor_offset_pos = self.floor_rect.topleft - self.offset
+        self.display_surface.blit(self.floor_surf_original, floor_offset_pos)
 
-
-        #New code
-        for sprite in sorted(self.sprites(), key=lambda sprite: sprite._layer):
-            offset_pos = sprite.rect.topleft - self.offset
-            self.display_surface.blit(sprite.image, offset_pos)
-
-        # Old code, not draw in the sprite layer order
         # for sprite in self.sprites():
-        # for sprite in sorted(self.sprites(),key = lambda sprite: sprite.rect.centery):
-        #     offset_pos = sprite.rect.topleft - self.offset
-        #     self.display_surface.blit(sprite.image,offset_pos)
+        for sprite in sorted(self.sprites(),key = lambda sprite: sprite.rect.centery):
+            offset_pos = sprite.rect.topleft - self.offset
+            self.display_surface.blit(sprite.image,offset_pos)

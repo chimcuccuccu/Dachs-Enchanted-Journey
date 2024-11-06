@@ -1,12 +1,12 @@
 import pygame, sys
-
-from Button import *
+from demo_pygame.src.ui.Button import *
 import cv2
 from demo_pygame.src.main.Game import Game
-from demo_pygame.src.utilz.config import WIN_WIDTH, WIN_HEIGHT
+from demo_pygame.src.utilz.Config import WIN_WIDTH, WIN_HEIGHT
 
 pygame.init()
 pygame.font.init()
+pygame.mixer.init()
 
 info = pygame.display.Info()
 screen_width = info.current_w
@@ -17,13 +17,15 @@ pygame.display.set_caption("Menu")
 
 video = cv2.VideoCapture('../../res/Buttons/back_ground.mp4')
 
+button_click_sound = pygame.mixer.Sound('../../res/Ngan/sound_effects/button_pressed.mp3')
+button_hover_sound = pygame.mixer.Sound('../../res/Ngan/sound_effects/button_pressed.mp3')
+
 def get_font(size):
     return pygame.font.Font('../../res/fonts/ChangaOne-Regular.ttf', size)
 
 def get_font_button(size):
     return pygame.font.Font('../../res/fonts/Bungee-Regular.otf', size)
 
-#Dùng đẻ chuyển cảnh
 def fade(screen, width, height, color=(0, 0, 0), speed=5):
     fade_surface = pygame.Surface((width, height))
     fade_surface.fill(color)
@@ -44,30 +46,6 @@ def play():
             game_over_screen()
             return
 
-        PLAY_MOUSE_POS = pygame.mouse.get_pos()
-
-        SCREEN.fill("black")
-
-        PLAY_TEXT = get_font(45).render("Play Screen", True, "White")
-        PLAY_RECT = PLAY_TEXT.get_rect(center = (640, 260))
-        SCREEN.blit(PLAY_TEXT, PLAY_RECT)
-
-        PLAY_BACK = Button(image=None, pos=(640, 460),
-                           text_input="BACK", font=get_font(75), base_color="White", hovering_color="Green")
-
-        PLAY_BACK.changeColor(PLAY_MOUSE_POS)
-        PLAY_BACK.update(SCREEN)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
-                    main_menu()
-
-        pygame.display.update()
-
 def main_menu():
     clock = pygame.time.Clock()
 
@@ -75,7 +53,6 @@ def main_menu():
     name_back_image = pygame.transform.scale(name_back_image, (800, 200))
 
     while True:
-
         ret, frame = video.read()
         if not ret:
             video.set(cv2.CAP_PROP_POS_FRAMES, 0)
@@ -102,13 +79,12 @@ def main_menu():
 
         button_x = screen_width // 2
         button_y = screen_height // 2
-
+        
         PLAY_BUTTON = Button(image=base_image, pos=(button_x, button_y), base_image=base_image, hover_image=hover_image,
-                             text_input="PLAY", font=get_font_button(60), base_color="#a4925f", hovering_color="#a4925f", text_offset=(0, 0))
-
+                             text_input="PLAY", font=get_font_button(60), base_color="#a4925f", hovering_color="#a4925f", text_offset=(0, 0), click_sound=button_click_sound)
 
         QUIT_BUTTON = Button(image=base_image, pos=(button_x, button_y + 150), base_image=base_image, hover_image=hover_image,
-                             text_input="QUIT", font=get_font_button(60), base_color="#a4925f", hovering_color="#a4925f", text_offset=(0, 0))
+                             text_input="QUIT", font=get_font_button(60), base_color="#a4925f", hovering_color="#a4925f", text_offset=(0, 0), click_sound=button_click_sound)
 
         name_back_rect = name_back_image.get_rect(center=MENU_RECT.center)
 
@@ -125,6 +101,7 @@ def main_menu():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    button_click_sound.play()
                     fade(SCREEN, screen_width, screen_height)
                     play()
                     return
@@ -134,7 +111,7 @@ def main_menu():
                     sys.exit()
 
         pygame.display.update()
-        clock.tick(60)
+        clock.tick(200)
 
 def game_over_screen():
     while True:
@@ -164,25 +141,13 @@ def game_over_screen():
         QUIT_BUTTON = Button(image=base_image, pos=(button_x - 300, button_y + 100), base_image=base_image, hover_image=hover_image,
                              text_input="NO", font=get_font_button(60), base_color="#a4925f", hovering_color="#a4925f", text_offset=(0, 0))
 
-        base_home_image = pygame.image.load("../../res/Buttons/Home_Default.png")
-        base_home_image = pygame.transform.scale(base_home_image, (100, 100))
-
-        hover_home_image = pygame.image.load('../../res/Buttons/Home_Hover.png')
-        hover_home_image = pygame.transform.scale(hover_home_image, (100, 100))
-
-        BACK_BUTTON = Button(image=base_home_image, pos=(button_x, button_y + 200), base_image=base_home_image,
-                             hover_image=hover_home_image,
-                             text_input= None, font=get_font_button(50), base_color="#a4925f",
-                             hovering_color="#a4925f", text_offset=(0, 0))
-
         MOUSE_POS = pygame.mouse.get_pos()
 
         RESTART_BUTTON.changeColor(MOUSE_POS)
-        RESTART_BUTTON.update(SCREEN)
         QUIT_BUTTON.changeColor(MOUSE_POS)
+
+        RESTART_BUTTON.update(SCREEN)
         QUIT_BUTTON.update(SCREEN)
-        BACK_BUTTON.changeColor(MOUSE_POS)
-        BACK_BUTTON.update(SCREEN)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -190,12 +155,11 @@ def game_over_screen():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if RESTART_BUTTON.checkForInput(MOUSE_POS):
+                    fade(SCREEN, screen_width, screen_height)
                     play()
                     return
                 if QUIT_BUTTON.checkForInput(MOUSE_POS):
-                    pygame.quit()
-                    sys.exit()
-                if BACK_BUTTON.checkForInput(MOUSE_POS):
+                    fade(SCREEN, screen_width, screen_height)
                     main_menu()
                     return
 
