@@ -1,13 +1,17 @@
 import pygame
 import math
 
-from demo_pygame.src.utilz.config import *
+from demo_pygame.src.status.Attack import Attack
+from demo_pygame.src.status.AttackFire import AttackFire
+from demo_pygame.src.status.Heal import Heal
+from demo_pygame.src.utilz.Config import *
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, game, x, y):
+    def __init__(self, game, x, y, scale_factor=1.3):
         self.game = game
         self._layer = PLAYER_LAYER
         self.groups = self.game.all_sprites
+        self.scale_factor = scale_factor
         pygame.sprite.Sprite.__init__(self, self.groups)
         # super().__init__(self.groups)
 
@@ -64,9 +68,9 @@ class Player(pygame.sprite.Sprite):
 
     def collide_enemy(self):
         hits = pygame.sprite.spritecollide(self, self.game.enemies, False)
-        if hits:
-            self.kill()
-            self.game.playing = False
+        # if hits:
+        #     self.kill()
+        #     self.game.playing = False
 
     def animate(self):
         down_animations = [self.game.character_spritesheet.get_sprite(64, 0, self.width, self.height),
@@ -120,3 +124,6 @@ class Player(pygame.sprite.Sprite):
                 self.animation_loop += 0.1
                 if self.animation_loop >= 3:
                     self.animation_loop = 1
+
+        self.image = pygame.transform.scale(self.image, (self.width * self.scale_factor, self.height * self.scale_factor))
+

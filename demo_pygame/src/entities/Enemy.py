@@ -3,12 +3,12 @@ import random
 import pygame
 import math
 
-from demo_pygame.src.utilz.config import *
+from demo_pygame.src.utilz.Config import *
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, game, x, y):
-
+    def __init__(self, game, x, y, scale=2):
+        self.scale = scale
         self.game = game
         self._layer = ENEMY_LAYER
         self.groups = self.game.all_sprites, self.game.enemies
@@ -110,7 +110,7 @@ class Enemy(pygame.sprite.Sprite):
 
         if self.facing == 'down':
             if self.y_change == 0:
-                self.image = self.game.character_spritesheet.get_sprite(64, 0, self.width, self.height)
+                self.image = self.game.enemy_spritesheet.get_sprite(64, 0, self.width, self.height)
             else:
                 self.image = down_animations[math.floor(self.animation_loop)]
                 self.animation_loop += 0.1
@@ -119,7 +119,7 @@ class Enemy(pygame.sprite.Sprite):
 
         if self.facing == 'up':
             if self.y_change == 0:
-                self.image = self.game.character_spritesheet.get_sprite(0, 96, self.width, self.height)
+                self.image = self.game.enemy_spritesheet.get_sprite(0, 96, self.width, self.height)
             else:
                 self.image = up_animations[math.floor(self.animation_loop)]
                 self.animation_loop += 0.1
@@ -128,7 +128,7 @@ class Enemy(pygame.sprite.Sprite):
 
         if self.facing == 'right':
             if self.x_change == 0:
-                self.image = self.game.character_spritesheet.get_sprite(0, 64, self.width, self.height)
+                self.image = self.game.enemy_spritesheet.get_sprite(0, 64, self.width, self.height)
             else:
                 self.image = right_animations[math.floor(self.animation_loop)]
                 self.animation_loop += 0.1
@@ -137,7 +137,7 @@ class Enemy(pygame.sprite.Sprite):
 
         if self.facing == 'left':
             if self.x_change == 0:
-                self.image = self.game.character_spritesheet.get_sprite(0, 32, self.width, self.height)
+                self.image = self.game.enemy_spritesheet.get_sprite(0, 32, self.width, self.height)
             else:
                 self.image = left_animations[math.floor(self.animation_loop)]
                 self.animation_loop += 0.1

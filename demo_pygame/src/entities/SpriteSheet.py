@@ -1,6 +1,6 @@
 import pygame
 
-from demo_pygame.src.utilz.config import BLACK
+from demo_pygame.src.utilz.Config import BLACK
 
 
 class Spritesheet:

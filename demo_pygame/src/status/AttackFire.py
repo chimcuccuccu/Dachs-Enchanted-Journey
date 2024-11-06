@@ -1,10 +1,12 @@
 import pygame
 import math
 
-from demo_pygame.src.utilz.config import *
+from demo_pygame.src.utilz.Config import *
 
 
 class AttackFire(pygame.sprite.Sprite):
+    cooldown = 3000  # Cooldown của AttackFire là 3 giây
+    last_used = 0  # Lần sử dụng gần nhất của AttackFire
     def __init__(self, game, x, y, direction):
         self.game = game
         self._layer = PLAYER_LAYER
@@ -16,6 +18,9 @@ class AttackFire(pygame.sprite.Sprite):
         self.width = TILESIZE
         self.height = TILESIZE
 
+        self.map_width = 3200
+        self.map_height = 1920
+
         self.direction = direction
         self.animation_loop = 0
 
@@ -24,19 +29,38 @@ class AttackFire(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
+    @classmethod
+    def can_create(cls):
+        # """Kiểm tra nếu có thể tạo Attack dựa trên cooldown."""
+        # current_time = pygame.time.get_ticks()
+        # if current_time - cls.last_used >= cls.cooldown:
+        #     cls.last_used = current_time
+        #     return True
+        # return False
+        """Kiểm tra nếu cooldown đã hết mà không cập nhật last_used."""
+        current_time = pygame.time.get_ticks()
+        return (current_time - cls.last_used) >= cls.cooldown
+
+    def use_skill(self):
+        """Gọi khi kỹ năng thực sự được kích hoạt để cập nhật last_used."""
+        if self.can_create():
+            self.__class__.last_used = pygame.time.get_ticks()
+            # Thực hiện các hành động khác khi sử dụng kỹ năng
+
     def update(self):
         self.animate()
         self.collide()
         self.move()
 
-        if self.rect.right < 0 or self.rect.left > self.game.screen.get_width() or \
-                self.rect.bottom < 0 or self.rect.top > self.game.screen.get_height():
+        if self.rect.right < 0 or self.rect.left > self.map_width or \
+                self.rect.bottom < 0 or self.rect.top > self.map_height:
             self.kill()
 
     def collide(self):
          hits = pygame.sprite.spritecollide(self, self.game.enemies, True)
 
     def animate(self):
+        # direction = self.game.player.facing
 
         right_animations = [self.game.attackFire_spritesheet.get_sprite(0, 48, self.width + 16, self.height + 16),
                             self.game.attackFire_spritesheet.get_sprite(48, 48, self.width + 16, self.height + 16),

@@ -1,15 +1,19 @@
 import pygame
+import pytmx
 
 from demo_pygame.src.entities.Enemy import Enemy
 from demo_pygame.src.entities.EnemySpawner import EnemySpawner
 from demo_pygame.src.entities.Player import Player
 from demo_pygame.src.entities.SpriteSheet import Spritesheet
+from demo_pygame.src.levels.Map import TiledMap
 from demo_pygame.src.status.Attack import Attack
 from demo_pygame.src.status.AttackFire import AttackFire
 from demo_pygame.src.status.Heal import Heal
 from demo_pygame.src.ui.Button import Button
-from demo_pygame.src.utilz.config import *
-from demo_pygame.src.levels.level import *
+from demo_pygame.src.ui.Door import Door
+from demo_pygame.src.ui.IconCooldown import IconCooldown
+from demo_pygame.src.utilz.Config import *
+from demo_pygame.src.levels.Level import *
 import sys
 
 class Game:
@@ -23,30 +27,44 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.running = True
-        self.nganMapSprite = Spritesheet('../../res/Ngan/maps/Ground.png')
+        self.nganMapSprite = Spritesheet('../../res/img/Map1.png')
         self.character_spritesheet = Spritesheet('../../res/img/character.png')
         self.terrain_spritesheet = Spritesheet('../../res/img/terrain.png')
         self.enemy_spritesheet = Spritesheet('../../res/img/enemy.png')
         self.attack_spritesheet = Spritesheet('../../res/img/attack.png')
+        self.door_spritesheet = Spritesheet('../../res/Ngan/tài nguyên Py/mystic_woods_free_2.2/sprites/tilesets/walls/wooden_door.png')
         self.attackFire_spritesheet = Spritesheet('../../res/img/fireball.png')
         self.heal_spritesheet = Spritesheet('../../res/img/heal.png')
         self.intro_backgroud = pygame.image.load('../../res/img/introbackground.png')
+
+        self.attack_icon = pygame.image.load("../../res/img/attack_icon_64x64.png")
+        self.attackfire_icon = pygame.image.load("../../res/img/attackfire_icon_64x64.png")
+        self.heal_icon = pygame.image.load("../../res/img/heal_icon_64x64.png")
+        # self.attack_icon = Spritesheet("../../res/img/attack_icon_64x64.png")
+        # self.attackfire_icon = Spritesheet("../../res/img/attackfire_icon_64x64.png")
+        # self.heal_icon = Spritesheet("../../res/img/heal_icon_64x64.png")
+
+        self.icon_cooldown = IconCooldown(self)
+
         self.map_width = 3200
         self.map_height = 1920
 
         self.visible_sprites = YSortCameraGroup()
 
+        self.tmx_data = pytmx.load_pygame('../../res/Ngan/maps/Map1.tmx')
     def createTilemap(self):
-        self.level = Level(self, 0, 0)
-        self.visible_sprites.add(self.level)
-        self.all_sprites.add(self.level)
+        # self.level = Level(self, 0, 0)
+        self.level = TiledMap('../../res/Ngan/maps/Map1.tmx', self)
+        # self.visible_sprites.add(self.level)
+        # self.all_sprites.add(self.level)
 
         info = pygame.display.Info()
 
         screen_width = info.current_w
         screen_height = info.current_h
 
-        self.player = Player(self, screen_width / 2, screen_height / 2)
+        self.player = Player(self, 2800, 300)
+
 
         self.visible_sprites.add(self.player)
         self.all_sprites.add(self.player)
@@ -67,6 +85,14 @@ class Game:
             self.visible_sprites.add(enemy)
             self.all_sprites.add(enemy)
 
+        # vì cửa 16x16 nen phai chia ti le cho dung
+        door_x = 41 * 2
+        door_y = 9 * 2
+        self.door = Door(self, door_x, door_y)
+        self.visible_sprites.add(self.door)
+        self.all_sprites.add(self.door)
+        self.doors.add(self.door)
+
     def new(self):
         self.playing = True
 
@@ -75,6 +101,7 @@ class Game:
         self.enemies = pygame.sprite.LayeredUpdates()
         self.attacks = pygame.sprite.LayeredUpdates()
         self.attacksFire = pygame.sprite.LayeredUpdates()
+        self.doors = pygame.sprite.LayeredUpdates()
         self.heal = pygame.sprite.LayeredUpdates()
         self.level = pygame.sprite.LayeredUpdates()
         self.createTilemap()
@@ -85,7 +112,7 @@ class Game:
                 self.playing = False
                 self.running = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_SPACE and Attack.can_create():
                     if self.player.facing == 'up':
                         attack = Attack(self, self.player.rect.x, self.player.rect.y - TILESIZE)
                     if self.player.facing == 'down':
@@ -94,10 +121,11 @@ class Game:
                         attack = Attack(self, self.player.rect.x - TILESIZE, self.player.rect.y)
                     if self.player.facing == 'right':
                         attack = Attack(self, self.player.rect.x + TILESIZE, self.player.rect.y)
+                    attack.use_skill()  # Cập nhật last_used khi sử dụng
                     self.visible_sprites.add(attack) # (*ngan*) cái này để cho mấy cái status hiện lên màn hình á
                     self.all_sprites.add(attack)
                     self.attacks.add(attack)        # cái này nữa, mấy cái bên dưới nữa
-                elif event.key == pygame.K_h:
+                elif event.key == pygame.K_h and AttackFire.can_create():
                     direction = self.player.facing
                     if self.player.facing == 'up':
                         attack_fire = AttackFire(self, self.player.rect.x - 8, self.player.rect.y - TILESIZE, direction)
@@ -107,11 +135,13 @@ class Game:
                         attack_fire = AttackFire(self, self.player.rect.x - TILESIZE, self.player.rect.y - 8, direction)
                     if self.player.facing == 'right':
                         attack_fire = AttackFire(self, self.player.rect.x + TILESIZE, self.player.rect.y - 8, direction)
+                    attack_fire.use_skill()  # Cập nhật last_used khi sử dụng
                     self.visible_sprites.add(attack_fire) # nè nè
                     self.all_sprites.add(attack_fire)
                     self.attacksFire.add(attack_fire) # đay nữa
-                elif event.key == pygame.K_c:
+                elif event.key == pygame.K_c and Heal.can_create():
                     heal = Heal(self, self.player.rect.x, self.player.rect.y)
+                    heal.use_skill()  # Cập nhật last_used khi sử dụng
                     self.visible_sprites.add(heal) # è è
                     self.all_sprites.add(heal)
                     self.heal.add(heal)
@@ -120,11 +150,18 @@ class Game:
     def update(self):
         self.all_sprites.update()
 
+        door_hits = pygame.sprite.spritecollide(self.player, self.doors, False)
+        for door in door_hits:
+            door.open()
+
     def draw(self):
         self.screen.fill(BLACK)
         self.visible_sprites.custom_draw(self.player)
         self.clock.tick(FPS)
         pygame.display.update()
+        self.icon_cooldown.draw()
+        pygame.display.flip()
+        # self.clock.tick(30)
 
     def main(self):
         while self.playing:
@@ -135,30 +172,4 @@ class Game:
 
     def game_over(self):
         pass
-
-    # def intro_screen(self):
-    #     intro = True
-    #
-    #     title = self.font.render('Awesome Game', True, BLACK)
-    #     title_rect = title.get_rect(x = 10, y = 10)
-    #
-    #     play_button = Button(10, 50, 100, 50, WHITE, BLACK, 'Play', 32)
-    #
-    #     while intro:
-    #         for event in pygame.event.get():
-    #             if event.type == pygame.QUIT:
-    #                 intro = False
-    #                 self.running = False
-    #
-    #         mouse_pos = pygame.mouse.get_pos()
-    #         mouse_pressed = pygame.mouse.get_pressed()
-    #
-    #         if play_button.is_pressed(mouse_pos, mouse_pressed):
-    #             intro = False
-    #
-    #         self.screen.blit(self.intro_backgroud, (0, 0))
-    #         self.screen.blit(title, title_rect)
-    #         self.screen.blit(play_button.image, play_button.rect)
-    #         self.clock.tick(FPS)
-    #         pygame.display.update()
 
