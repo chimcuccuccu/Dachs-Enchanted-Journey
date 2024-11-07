@@ -3,11 +3,14 @@ import pytmx
 
 from demo_pygame.src.entities.Enemy import Enemy
 from demo_pygame.src.entities.EnemySpawner import EnemySpawner
+from demo_pygame.src.entities.Coin import Coin
+from demo_pygame.src.entities.CoinSpawner import CoinSpawner
 from demo_pygame.src.entities.Player import Player
 from demo_pygame.src.entities.SpriteSheet import Spritesheet
 from demo_pygame.src.levels.Map import TiledMap
 from demo_pygame.src.status.Attack import Attack
 from demo_pygame.src.status.AttackFire import AttackFire
+from demo_pygame.src.status.Scoreboard import Scoreboard
 from demo_pygame.src.status.Heal import Heal
 from demo_pygame.src.ui.Button import Button
 from demo_pygame.src.objects.Door import *
@@ -34,9 +37,11 @@ class Game:
         self.door_spritesheet = Spritesheet('../../res/Ngan/tài nguyên Py/mystic_woods_free_2.2/sprites/tilesets/walls/wooden_door.png')
         self.attackFire_spritesheet = Spritesheet('../../res/img/fireball.png')
         self.heal_spritesheet = Spritesheet('../../res/img/heal.png')
+        self.coin_spritesheet = Spritesheet('../../res/img/coin.png')
         self.intro_backgroud = pygame.image.load('../../res/img/introbackground.png')
         self.map_width = 3200
         self.map_height = 1920
+        self.score = 0
 
         self.collidables = []
 
@@ -45,6 +50,10 @@ class Game:
         self.tmx_data = pytmx.load_pygame('../../res/Ngan/maps/Map1.tmx')
     def createTilemap(self):
         self.level = TiledMap('../../res/Ngan/maps/Map1.tmx', self)
+
+
+        level = Level(self, 0, 0)
+        self.all_sprites.add(level)
 
         info = pygame.display.Info()
 
@@ -56,6 +65,9 @@ class Game:
 
         self.visible_sprites.add(self.player)
         self.all_sprites.add(self.player)
+
+        self.scoreboard = Scoreboard(self)
+
 
         # self.visible_sprites.add(self.attacks)
         self.all_sprites.add(self.attacks)
@@ -81,16 +93,23 @@ class Game:
         self.all_sprites.add(self.door)
         self.doors.add(self.door)
 
+        spawner_coin = CoinSpawner(self, self.terrain_spritesheet)
+        spawner_coin.spawn_random_coins(20)
+        for coin in self.coins:
+            self.visible_sprites.add(coin)
+            self.all_sprites.add(coin)
+
     def new(self):
         self.playing = True
 
         self.all_sprites = pygame.sprite.LayeredUpdates()
         self.enemies = pygame.sprite.LayeredUpdates()
+        self.coins = pygame.sprite.LayeredUpdates()
         self.attacks = pygame.sprite.LayeredUpdates()
         self.attacksFire = pygame.sprite.LayeredUpdates()
         self.doors = pygame.sprite.LayeredUpdates()
         self.heal = pygame.sprite.LayeredUpdates()
-        self.level = pygame.sprite.LayeredUpdates()
+
         self.createTilemap()
 
     def events(self):
@@ -141,8 +160,10 @@ class Game:
     def draw(self):
         self.screen.fill(BLACK)
         self.visible_sprites.custom_draw(self.player)
+        self.scoreboard.draw()
         self.clock.tick(FPS)
         pygame.display.update()
+
 
     def main(self):
         while self.playing:
@@ -153,4 +174,3 @@ class Game:
 
     def game_over(self):
         pass
-

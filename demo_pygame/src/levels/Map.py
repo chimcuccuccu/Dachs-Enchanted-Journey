@@ -6,7 +6,6 @@ from demo_pygame.src.entities.Enemy import Enemy
 from demo_pygame.src.objects.Tree import Objects
 from demo_pygame.src.utilz.Config import *
 
-
 class TiledMap(pygame.sprite.Sprite):
     def __init__(self, filename, game, scale_factor=4):
         super().__init__()
@@ -17,9 +16,6 @@ class TiledMap(pygame.sprite.Sprite):
         self.make_map(game)
         self.door_position = None
         self.rect = pygame.Rect(0, 0, self.width, self.height)
-
-
-
     def render_layer(self, surface, layer):
         ti = self.tmxdata.get_tile_image_by_gid
         if isinstance(layer, pytmx.TiledTileLayer):

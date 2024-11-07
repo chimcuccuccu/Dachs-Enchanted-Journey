@@ -1,5 +1,4 @@
 import random
-import pygame
 from demo_pygame.src.entities.Enemy import Enemy
 from demo_pygame.src.utilz.Config import *
 

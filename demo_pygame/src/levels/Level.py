@@ -11,7 +11,7 @@ class Level(pygame.sprite.Sprite):
         screen_height = info.current_h
         self.game = game
         self._layer = GROUND_LAYER
-        self.groups = self.game.all_sprites, self.game.level
+        self.groups = self.game.all_sprites
 
 
         pygame.sprite.Sprite.__init__(self, self.groups)

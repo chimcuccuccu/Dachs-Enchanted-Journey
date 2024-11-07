@@ -1,5 +1,4 @@
 import random
-
 import pygame
 import math
 
@@ -143,4 +142,3 @@ class Enemy(pygame.sprite.Sprite):
                 self.animation_loop += 0.1
                 if self.animation_loop >= 3:
                     self.animation_loop = 1
-
