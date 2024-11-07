@@ -1,14 +1,13 @@
 import random
-
 import pygame
 import math
 
-from demo_pygame.src.utilz.config import *
+from demo_pygame.src.utilz.Config import *
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, game, x, y):
-
+    def __init__(self, game, x, y, scale=2):
+        self.scale = scale
         self.game = game
         self._layer = ENEMY_LAYER
         self.groups = self.game.all_sprites, self.game.enemies
@@ -143,4 +142,3 @@ class Enemy(pygame.sprite.Sprite):
                 self.animation_loop += 0.1
                 if self.animation_loop >= 3:
                     self.animation_loop = 1
-
