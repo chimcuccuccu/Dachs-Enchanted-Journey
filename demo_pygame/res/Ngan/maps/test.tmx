@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="12" height="6" tilewidth="16" tileheight="16" nextobjectid="34">
+ <tileset firstgid="1" name="tileset_gray" tilewidth="16" tileheight="16">
+  <image source="../../tài nguyên Py/Free CC0 Top Down Tileset Pixel Art/Tilesets/tileset_gray.png" width="256" height="80"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="12" height="6">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYCICswCxEBArQmlCWASIRYFYkEj1MEysehMSzdeC0o5A7EQEdoGqBwCLBgbB
+  </data>
+ </layer>
+ <objectgroup name="Object Layer 1">
+  <object id="22" gid="15" x="78.3333" y="46" width="16" height="16"/>
+  <object id="23" gid="15" x="32" y="66.3333" width="16" height="16"/>
+  <object id="24" gid="15" x="94.3333" y="78.6667" width="16" height="16"/>
+  <object id="25" gid="15" x="127.333" y="30.6667" width="16" height="16"/>
+  <object id="26" gid="15" x="18.6667" y="34.3333" width="16" height="16"/>
+  <object id="27" gid="30" x="127.333" y="61.6667" width="16" height="16"/>
+  <object id="29" gid="76" x="127.333" y="75.6667" width="16" height="16"/>
+  <object id="31" gid="62" x="47" y="47" width="16" height="16"/>
+  <object id="33" gid="76" x="46.3333" y="59.6667" width="16" height="16"/>
+ </objectgroup>
+</map>
