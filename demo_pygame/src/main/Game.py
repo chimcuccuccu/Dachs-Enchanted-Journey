@@ -2,13 +2,17 @@ import pygame
 
 from demo_pygame.src.entities.Enemy import Enemy
 from demo_pygame.src.entities.EnemySpawner import EnemySpawner
+from demo_pygame.src.entities.Coin import Coin
+from demo_pygame.src.entities.CoinSpawner import CoinSpawner
 from demo_pygame.src.entities.Player import Player
 from demo_pygame.src.entities.SpriteSheet import Spritesheet
 from demo_pygame.src.status.Attack import Attack
 from demo_pygame.src.status.AttackFire import AttackFire
+from demo_pygame.src.status.Scoreboard import Scoreboard
 from demo_pygame.src.status.Heal import Heal
 from demo_pygame.src.ui.Button import Button
-from demo_pygame.src.utilz.config import *
+
+from demo_pygame.src.utilz.Config import *
 from demo_pygame.src.levels.level import *
 import sys
 
@@ -23,24 +27,24 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.running = True
-        self.nganMapSprite = Spritesheet('../../res/Ngan/maps/Ground.png')
+        self.nganMapSprite = Spritesheet('../../res/img/Map1.png')
         self.character_spritesheet = Spritesheet('../../res/img/character.png')
         self.terrain_spritesheet = Spritesheet('../../res/img/terrain.png')
         self.enemy_spritesheet = Spritesheet('../../res/img/enemy.png')
         self.attack_spritesheet = Spritesheet('../../res/img/attack.png')
         self.attackFire_spritesheet = Spritesheet('../../res/img/fireball.png')
         self.heal_spritesheet = Spritesheet('../../res/img/heal.png')
+        self.coin_spritesheet = Spritesheet('../../res/img/coin.png')
         self.intro_backgroud = pygame.image.load('../../res/img/introbackground.png')
         self.map_width = 3200
         self.map_height = 1920
+        self.score = 0
 
         self.visible_sprites = YSortCameraGroup()
 
     def createTilemap(self):
-        self.level = Level(self, 0, 0)
-        self.visible_sprites.add(self.level)
-        self.all_sprites.add(self.level)
-
+        level = Level(self, 0, 0)
+        self.all_sprites.add(level)
         info = pygame.display.Info()
 
         screen_width = info.current_w
@@ -50,6 +54,9 @@ class Game:
 
         self.visible_sprites.add(self.player)
         self.all_sprites.add(self.player)
+
+        self.scoreboard = Scoreboard(self)
+
 
         # self.visible_sprites.add(self.attacks)
         self.all_sprites.add(self.attacks)
@@ -67,16 +74,23 @@ class Game:
             self.visible_sprites.add(enemy)
             self.all_sprites.add(enemy)
 
+        spawner_coin = CoinSpawner(self, self.terrain_spritesheet)
+        spawner_coin.spawn_random_coins(20)
+        for coin in self.coins:
+            self.visible_sprites.add(coin)
+            self.all_sprites.add(coin)
+
     def new(self):
         self.playing = True
 
         self.all_sprites = pygame.sprite.LayeredUpdates()
         self.blocks = pygame.sprite.LayeredUpdates()
         self.enemies = pygame.sprite.LayeredUpdates()
+        self.coins = pygame.sprite.LayeredUpdates()
         self.attacks = pygame.sprite.LayeredUpdates()
         self.attacksFire = pygame.sprite.LayeredUpdates()
         self.heal = pygame.sprite.LayeredUpdates()
-        self.level = pygame.sprite.LayeredUpdates()
+
         self.createTilemap()
 
     def events(self):
@@ -123,8 +137,10 @@ class Game:
     def draw(self):
         self.screen.fill(BLACK)
         self.visible_sprites.custom_draw(self.player)
+        self.scoreboard.draw()
         self.clock.tick(FPS)
         pygame.display.update()
+
 
     def main(self):
         while self.playing:
@@ -136,29 +152,28 @@ class Game:
     def game_over(self):
         pass
 
-    # def intro_screen(self):
-    #     intro = True
-    #
-    #     title = self.font.render('Awesome Game', True, BLACK)
-    #     title_rect = title.get_rect(x = 10, y = 10)
-    #
-    #     play_button = Button(10, 50, 100, 50, WHITE, BLACK, 'Play', 32)
-    #
-    #     while intro:
-    #         for event in pygame.event.get():
-    #             if event.type == pygame.QUIT:
-    #                 intro = False
-    #                 self.running = False
-    #
-    #         mouse_pos = pygame.mouse.get_pos()
-    #         mouse_pressed = pygame.mouse.get_pressed()
-    #
-    #         if play_button.is_pressed(mouse_pos, mouse_pressed):
-    #             intro = False
-    #
-    #         self.screen.blit(self.intro_backgroud, (0, 0))
-    #         self.screen.blit(title, title_rect)
-    #         self.screen.blit(play_button.image, play_button.rect)
-    #         self.clock.tick(FPS)
-    #         pygame.display.update()
+    def intro_screen(self):
+        intro = True
 
+        title = self.font.render('Awesome Game', True, BLACK)
+        title_rect = title.get_rect(x = 10, y = 10)
+
+        play_button = Button(10, 50, 100, 50, WHITE, BLACK, 'Play', 32)
+
+        while intro:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    intro = False
+                    self.running = False
+
+            mouse_pos = pygame.mouse.get_pos()
+            mouse_pressed = pygame.mouse.get_pressed()
+
+            if play_button.is_pressed(mouse_pos, mouse_pressed):
+                intro = False
+
+            self.screen.blit(self.intro_backgroud, (0, 0))
+            self.screen.blit(title, title_rect)
+            self.screen.blit(play_button.image, play_button.rect)
+            self.clock.tick(FPS)
+            pygame.display.update()
