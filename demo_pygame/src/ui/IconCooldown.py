@@ -42,6 +42,8 @@ class IconCooldown:
                 # Hiển thị biểu tượng bình thường khi cooldown đã hoàn tất
                 self.game.screen.blit(self.icons[skill], icon_position)
 
+        pygame.display.update(pygame.Rect(50, self.game.screen.get_height() - 100, 200, 100))
+
     def dim_icon(self, icon):
         """Tạo biểu tượng mờ bằng cách điều chỉnh alpha."""
         dimmed_icon = icon.copy()
