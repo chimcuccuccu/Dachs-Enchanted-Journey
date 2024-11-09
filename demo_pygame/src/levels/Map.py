@@ -112,4 +112,5 @@ class TiledMap(pygame.sprite.Sprite):
                         enemy = Enemy(game, obj.x * self.scale_factor, obj.y * self.scale_factor)
                         game.visible_sprites.add(enemy)
                         game.all_sprites.add(enemy)
+
         return pygame.Surface((self.width, self.height), pygame.SRCALPHA)
