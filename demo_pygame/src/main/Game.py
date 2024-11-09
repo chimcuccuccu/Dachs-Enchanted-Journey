@@ -1,20 +1,23 @@
 import pygame
-import pytmx
+# from pytmx import pytmx
 
 from demo_pygame.src.entities.Enemy import Enemy
 from demo_pygame.src.entities.EnemySpawner import EnemySpawner
+from demo_pygame.src.entities.CoinSpawner import CoinSpawner
 from demo_pygame.src.entities.Player import Player
 from demo_pygame.src.entities.SpriteSheet import Spritesheet
 from demo_pygame.src.levels.Map import TiledMap
 from demo_pygame.src.status.Attack import Attack
 from demo_pygame.src.status.AttackFire import AttackFire
-from demo_pygame.src.status.Heal import Heal
-from demo_pygame.src.ui.Button import Button
-from demo_pygame.src.ui.Door import Door
 from demo_pygame.src.ui.IconCooldown import IconCooldown
+from demo_pygame.src.ui.Scoreboard import Scoreboard
+from demo_pygame.src.status.Heal import Heal
+from demo_pygame.src.objects.Door import *
 from demo_pygame.src.utilz.Config import *
 from demo_pygame.src.levels.Level import *
-import sys
+from pytmx.util_pygame import load_pygame
+
+
 
 class Game:
     def __init__(self):
@@ -27,7 +30,7 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.running = True
-        self.nganMapSprite = Spritesheet('../../res/img/Map1.png')
+        self.nganMapSprite = Spritesheet('../../res/Ngan/maps/Ground.png')
         self.character_spritesheet = Spritesheet('../../res/img/character.png')
         self.terrain_spritesheet = Spritesheet('../../res/img/terrain.png')
         self.enemy_spritesheet = Spritesheet('../../res/img/enemy.png')
@@ -35,28 +38,33 @@ class Game:
         self.door_spritesheet = Spritesheet('../../res/Ngan/tài nguyên Py/mystic_woods_free_2.2/sprites/tilesets/walls/wooden_door.png')
         self.attackFire_spritesheet = Spritesheet('../../res/img/fireball.png')
         self.heal_spritesheet = Spritesheet('../../res/img/heal.png')
+        self.coin_spritesheet = Spritesheet('../../res/img/coin.png')
         self.intro_backgroud = pygame.image.load('../../res/img/introbackground.png')
 
         self.attack_icon = pygame.image.load("../../res/img/attack_icon_64x64.png")
         self.attackfire_icon = pygame.image.load("../../res/img/attackfire_icon_64x64.png")
         self.heal_icon = pygame.image.load("../../res/img/heal_icon_64x64.png")
-        # self.attack_icon = Spritesheet("../../res/img/attack_icon_64x64.png")
-        # self.attackfire_icon = Spritesheet("../../res/img/attackfire_icon_64x64.png")
-        # self.heal_icon = Spritesheet("../../res/img/heal_icon_64x64.png")
 
         self.icon_cooldown = IconCooldown(self)
 
         self.map_width = 3200
         self.map_height = 1920
+        self.score = 0
+
+        self.map_image = pygame.image.load('../../res/img/Map1.png')  # Load your map image
+        self.enemy_spawner = EnemySpawner(self, self.map_image)
+
+        self.collidables = []
 
         self.visible_sprites = YSortCameraGroup()
 
-        self.tmx_data = pytmx.load_pygame('../../res/Ngan/maps/Map1.tmx')
+        self.tmx_data = load_pygame('../../res/Ngan/maps/Map1.tmx')
     def createTilemap(self):
-        # self.level = Level(self, 0, 0)
         self.level = TiledMap('../../res/Ngan/maps/Map1.tmx', self)
-        # self.visible_sprites.add(self.level)
-        # self.all_sprites.add(self.level)
+
+
+        level = Level(self, 0, 0)
+        self.all_sprites.add(level)
 
         info = pygame.display.Info()
 
@@ -68,6 +76,9 @@ class Game:
 
         self.visible_sprites.add(self.player)
         self.all_sprites.add(self.player)
+
+        self.scoreboard = Scoreboard(self)
+
 
         # self.visible_sprites.add(self.attacks)
         self.all_sprites.add(self.attacks)
@@ -93,17 +104,24 @@ class Game:
         self.all_sprites.add(self.door)
         self.doors.add(self.door)
 
+        spawner_coin = CoinSpawner(self, self.nganMapSprite)
+        spawner_coin.spawn_random_coins(20)
+        for coin in self.coins:
+            self.visible_sprites.add(coin)
+            self.all_sprites.add(coin)
+
     def new(self):
         self.playing = True
 
         self.all_sprites = pygame.sprite.LayeredUpdates()
         self.blocks = pygame.sprite.LayeredUpdates()
         self.enemies = pygame.sprite.LayeredUpdates()
+        self.coins = pygame.sprite.LayeredUpdates()
         self.attacks = pygame.sprite.LayeredUpdates()
         self.attacksFire = pygame.sprite.LayeredUpdates()
         self.doors = pygame.sprite.LayeredUpdates()
         self.heal = pygame.sprite.LayeredUpdates()
-        self.level = pygame.sprite.LayeredUpdates()
+
         self.createTilemap()
 
     def events(self):
@@ -135,7 +153,7 @@ class Game:
                         attack_fire = AttackFire(self, self.player.rect.x - TILESIZE, self.player.rect.y - 8, direction)
                     if self.player.facing == 'right':
                         attack_fire = AttackFire(self, self.player.rect.x + TILESIZE, self.player.rect.y - 8, direction)
-                    attack_fire.use_skill()  # Cập nhật last_used khi sử dụng
+                    attack_fire.use_skill()
                     self.visible_sprites.add(attack_fire) # nè nè
                     self.all_sprites.add(attack_fire)
                     self.attacksFire.add(attack_fire) # đay nữa
@@ -157,11 +175,13 @@ class Game:
     def draw(self):
         self.screen.fill(BLACK)
         self.visible_sprites.custom_draw(self.player)
+        self.scoreboard.draw()
         self.clock.tick(FPS)
         pygame.display.update()
         self.icon_cooldown.draw()
         pygame.display.flip()
         # self.clock.tick(30)
+
 
     def main(self):
         while self.playing:
@@ -172,4 +192,30 @@ class Game:
 
     def game_over(self):
         pass
+
+    # def intro_screen(self):
+    #     intro = True
+    #
+    #     title = self.font.render('Awesome Game', True, BLACK)
+    #     title_rect = title.get_rect(x = 10, y = 10)
+    #
+    #     play_button = Button(10, 50, 100, 50, WHITE, BLACK, 'Play', 32)
+    #
+    #     while intro:
+    #         for event in pygame.event.get():
+    #             if event.type == pygame.QUIT:
+    #                 intro = False
+    #                 self.running = False
+    #
+    #         mouse_pos = pygame.mouse.get_pos()
+    #         mouse_pressed = pygame.mouse.get_pressed()
+    #
+    #         if play_button.is_pressed(mouse_pos, mouse_pressed):
+    #             intro = False
+    #
+    #         self.screen.blit(self.intro_backgroud, (0, 0))
+    #         self.screen.blit(title, title_rect)
+    #         self.screen.blit(play_button.image, play_button.rect)
+    #         self.clock.tick(FPS)
+    #         pygame.display.update()
 

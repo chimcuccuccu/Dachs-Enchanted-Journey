@@ -45,3 +45,6 @@ class Door (pygame.sprite.Sprite):
                 self.open()
         else:
             self.close()
+
+
+
