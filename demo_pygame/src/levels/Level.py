@@ -11,7 +11,7 @@ class Level(pygame.sprite.Sprite):
         screen_height = info.current_h
         self.game = game
         self._layer = GROUND_LAYER
-        self.groups = self.game.all_sprites, self.game.level
+        self.groups = self.game.all_sprites
 
 
         pygame.sprite.Sprite.__init__(self, self.groups)
@@ -59,20 +59,7 @@ class YSortCameraGroup(pygame.sprite.Group):
         self.offset.x = max(0, min(self.offset.x, self.floor_rect.width - self.display_surface.get_width()))
         self.offset.y = max(0, min(self.offset.y, self.floor_rect.height - self.display_surface.get_height()))
 
-        # player_layer = PLAYER_LAYER
-        # for sprite in self.sprites():
-        #     if sprite != player:
-        #         if player.rect.centery > sprite.rect.centery:
-        #             player_layer = max(player_layer, sprite._layer + 1)
-        #         else:
-        #             player_layer = min(player_layer, sprite._layer - 1)
-        # player._layer = player_layer
-
-        #New code
-        # for sprite in sorted(self.sprites(), key=lambda sprite: (sprite._layer, sprite.rect.centery)):
-        #     offset_pos = sprite.rect.topleft - self.offset
-        #     self.display_surface.blit(sprite.image, offset_pos)
-
+        #Vẽ bản đồ theo thứ tự của layer
         for sprite in sorted(self.sprites(), key=lambda sprite: sprite._layer):
                    offset_pos = sprite.rect.topleft - self.offset
                    self.display_surface.blit(sprite.image, offset_pos)

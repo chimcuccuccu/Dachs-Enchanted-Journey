@@ -1,5 +1,4 @@
 import random
-
 import pygame
 import math
 
@@ -43,52 +42,77 @@ class Enemy(pygame.sprite.Sprite):
         self.x_change = 0
         self.y_change = 0
 
+
     def movement(self):
-        # Tính khoảng cách giữa player và enemy
+        # Calculate the distance between the player and the enemy
         distance = math.sqrt(
             (self.game.player.rect.x - self.rect.x) ** 2 + (self.game.player.rect.y - self.rect.y) ** 2)
 
-        # Nếu khoảng cách giữa enemy và player nhỏ hơn 200 pixel thì bám đuổi player
+        # If the distance between the enemy and the player is less than 200 pixels, chase the player
         if distance < 200:
             dx = self.game.player.rect.x - self.rect.x
             dy = self.game.player.rect.y - self.rect.y
 
-            # Xác định ưu tiên hướng di chuyển
-            if abs(dx) > abs(dy):  # Di chuyển theo chiều ngang
+            # Determine the priority direction of movement
+            if abs(dx) > abs(dy):  # Move horizontally
                 if dx > 0:
-                    self.x_change = ENEMY_SPEED
-                    self.facing = 'right'
+                    new_x = self.rect.x + ENEMY_SPEED
+                    if not self.collides_with_objects(new_x, self.rect.y):
+                        self.x_change = ENEMY_SPEED
+                        self.facing = 'right'
                 else:
-                    self.x_change = -ENEMY_SPEED
-                    self.facing = 'left'
-                self.y_change = 0  # Chỉ di chuyển theo trục x
-            else:  # Di chuyển theo chiều dọc
+                    new_x = self.rect.x - ENEMY_SPEED
+                    if not self.collides_with_objects(new_x, self.rect.y):
+                        self.x_change = -ENEMY_SPEED
+                        self.facing = 'left'
+                self.y_change = 0  # Only move along the x-axis
+            else:  # Move vertically
                 if dy > 0:
-                    self.y_change = ENEMY_SPEED
-                    self.facing = 'down'
+                    new_y = self.rect.y + ENEMY_SPEED
+                    if not self.collides_with_objects(self.rect.x, new_y):
+                        self.y_change = ENEMY_SPEED
+                        self.facing = 'down'
                 else:
-                    self.y_change = -ENEMY_SPEED
-                    self.facing = 'up'
-                self.x_change = 0  # Chỉ di chuyển theo trục y
+                    new_y = self.rect.y - ENEMY_SPEED
+                    if not self.collides_with_objects(self.rect.x, new_y):
+                        self.y_change = -ENEMY_SPEED
+                        self.facing = 'up'
+                self.x_change = 0  # Only move along the y-axis
         else:
-            # Nếu không trong phạm vi, tiếp tục di chuyển như bình thường
+            # If not in range, continue moving as usual
             if self.facing == 'left':
-                self.x_change -= ENEMY_SPEED
-                self.movement_loop -= 1
-                if self.movement_loop <= -self.max_travel:
-                    self.facing = 'right'
+                new_x = self.rect.x - ENEMY_SPEED
+                if not self.collides_with_objects(new_x, self.rect.y):
+                    self.x_change -= ENEMY_SPEED
+                    self.movement_loop -= 1
+                    if self.movement_loop <= -self.max_travel:
+                        self.facing = 'right'
 
             if self.facing == 'right':
-                self.x_change += ENEMY_SPEED
-                self.movement_loop += 1
-                if self.movement_loop >= self.max_travel:
-                    self.facing = 'left'
+                new_x = self.rect.x + ENEMY_SPEED
+                if not self.collides_with_objects(new_x, self.rect.y):
+                    self.x_change += ENEMY_SPEED
+                    self.movement_loop += 1
+                    if self.movement_loop >= self.max_travel:
+                        self.facing = 'left'
             if self.facing == 'up':
-                self.y_change -= ENEMY_SPEED
+                new_y = self.rect.y - ENEMY_SPEED
+                if not self.collides_with_objects(self.rect.x, new_y):
+                    self.y_change -= ENEMY_SPEED
             if self.facing == 'down':
-                self.y_change += ENEMY_SPEED
+                new_y = self.rect.y + ENEMY_SPEED
+                if not self.collides_with_objects(self.rect.x, new_y):
+                    self.y_change += ENEMY_SPEED
 
-        # Sau khi cập nhật hướng, ta sẽ gọi lại hàm animate để đảm bảo đúng hoạt ảnh
+    #check va cham giua enemies va object
+    def collides_with_objects(self, x, y):
+        temp_rect = self.rect.copy()
+        temp_rect.x = x
+        temp_rect.y = y
+        for obj in self.game.collidables:
+            if temp_rect.colliderect(obj.rect):
+                return True
+        return False
 
     def animate(self):
 
@@ -110,7 +134,7 @@ class Enemy(pygame.sprite.Sprite):
 
         if self.facing == 'down':
             if self.y_change == 0:
-                self.image = self.game.enemy_spritesheet.get_sprite(64, 0, self.width, self.height)
+                self.image = down_animations[0]
             else:
                 self.image = down_animations[math.floor(self.animation_loop)]
                 self.animation_loop += 0.1
@@ -119,7 +143,7 @@ class Enemy(pygame.sprite.Sprite):
 
         if self.facing == 'up':
             if self.y_change == 0:
-                self.image = self.game.enemy_spritesheet.get_sprite(0, 96, self.width, self.height)
+                self.image = up_animations[0]
             else:
                 self.image = up_animations[math.floor(self.animation_loop)]
                 self.animation_loop += 0.1
@@ -128,7 +152,7 @@ class Enemy(pygame.sprite.Sprite):
 
         if self.facing == 'right':
             if self.x_change == 0:
-                self.image = self.game.enemy_spritesheet.get_sprite(0, 64, self.width, self.height)
+                self.image = right_animations[0]
             else:
                 self.image = right_animations[math.floor(self.animation_loop)]
                 self.animation_loop += 0.1
@@ -137,10 +161,9 @@ class Enemy(pygame.sprite.Sprite):
 
         if self.facing == 'left':
             if self.x_change == 0:
-                self.image = self.game.enemy_spritesheet.get_sprite(0, 32, self.width, self.height)
+                self.image = left_animations[0]
             else:
                 self.image = left_animations[math.floor(self.animation_loop)]
                 self.animation_loop += 0.1
                 if self.animation_loop >= 3:
                     self.animation_loop = 1
-

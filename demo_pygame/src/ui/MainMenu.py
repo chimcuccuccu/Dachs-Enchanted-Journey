@@ -106,6 +106,7 @@ def main_menu():
                     play()
                     return
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    button_click_sound.play()
                     fade(SCREEN, screen_width, screen_height)
                     pygame.quit()
                     sys.exit()
@@ -136,10 +137,10 @@ def game_over_screen():
         hover_image = pygame.transform.scale(hover_image, (280, 120))
 
         RESTART_BUTTON = Button(image=base_image, pos=(button_x + 300, button_y + 100), base_image=base_image, hover_image=hover_image,
-                             text_input="YES", font=get_font_button(50), base_color="#a4925f", hovering_color="#a4925f", text_offset=(0, 0))
+                             text_input="YES", font=get_font_button(50), base_color="#a4925f", hovering_color="#a4925f", text_offset=(0, 0), click_sound=button_click_sound)
 
         QUIT_BUTTON = Button(image=base_image, pos=(button_x - 300, button_y + 100), base_image=base_image, hover_image=hover_image,
-                             text_input="NO", font=get_font_button(60), base_color="#a4925f", hovering_color="#a4925f", text_offset=(0, 0))
+                             text_input="NO", font=get_font_button(60), base_color="#a4925f", hovering_color="#a4925f", text_offset=(0, 0), click_sound=button_click_sound)
 
         MOUSE_POS = pygame.mouse.get_pos()
 
@@ -155,10 +156,12 @@ def game_over_screen():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if RESTART_BUTTON.checkForInput(MOUSE_POS):
+                    button_click_sound.play()
                     fade(SCREEN, screen_width, screen_height)
                     play()
                     return
                 if QUIT_BUTTON.checkForInput(MOUSE_POS):
+                    button_click_sound.play()
                     fade(SCREEN, screen_width, screen_height)
                     main_menu()
                     return
