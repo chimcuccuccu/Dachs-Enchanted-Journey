@@ -1,3 +1,4 @@
+import pygame.display
 import pytmx
 
 from demo_pygame.src.entities.EnemySpawner import EnemySpawner
@@ -7,6 +8,7 @@ from demo_pygame.src.entities.SpriteSheet import Spritesheet
 from demo_pygame.src.levels.Map import TiledMap
 from demo_pygame.src.status.Attack import Attack
 from demo_pygame.src.status.AttackFire import AttackFire
+from demo_pygame.src.ui.IconCooldown import IconCooldown
 from demo_pygame.src.ui.Scoreboard import Scoreboard
 from demo_pygame.src.status.Heal import Heal
 from demo_pygame.src.objects.Door import *
@@ -47,6 +49,12 @@ class Game:
         self.visible_sprites = YSortCameraGroup()
 
         self.tmx_data = pytmx.load_pygame('../../res/Ngan/maps/Map1.tmx')
+
+        self.attack_icon = pygame.image.load("../../res/img/attack_icon_64x64.png")
+        self.attackfire_icon = pygame.image.load("../../res/img/attackfire_icon_64x64.png")
+        self.heal_icon = pygame.image.load("../../res/img/heal_icon_64x64.png")
+        self.icon_cooldown = IconCooldown(self)
+
     def createTilemap(self):
         self.level = TiledMap('../../res/Ngan/maps/Map1.tmx', self)
 
@@ -129,6 +137,7 @@ class Game:
                     self.visible_sprites.add(attack) # (*ngan*) cái này để cho mấy cái status hiện lên màn hình á
                     self.all_sprites.add(attack)
                     self.attacks.add(attack)        # cái này nữa, mấy cái bên dưới nữa
+                    attack.use_skill()  # Cập nhật last_used khi sử dụng
                 elif event.key == pygame.K_h:
                     direction = self.player.facing
                     if self.player.facing == 'up':
@@ -142,12 +151,13 @@ class Game:
                     self.visible_sprites.add(attack_fire) # nè nè
                     self.all_sprites.add(attack_fire)
                     self.attacksFire.add(attack_fire) # đay nữa
+                    attack_fire.use_skill()  # Cập nhật last_used khi sử dụng
                 elif event.key == pygame.K_c:
                     heal = Heal(self, self.player.rect.x, self.player.rect.y)
                     self.visible_sprites.add(heal) # è è
                     self.all_sprites.add(heal)
                     self.heal.add(heal)
-
+                    heal.use_skill()  # Cập nhật last_used khi sử dụng
 
     def update(self):
         self.all_sprites.update()
@@ -159,10 +169,10 @@ class Game:
     def draw(self):
         self.screen.fill(BLACK)
         self.visible_sprites.custom_draw(self.player)
-        self.scoreboard.draw()
         self.clock.tick(FPS)
         pygame.display.update()
-
+        self.icon_cooldown.draw()
+        pygame.display.flip()
 
     def main(self):
         while self.playing:

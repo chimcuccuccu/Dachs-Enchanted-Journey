@@ -5,6 +5,8 @@ from demo_pygame.src.utilz.Config import *
 
 
 class Heal(pygame.sprite.Sprite):
+    cooldown = 10000  # Cooldown của Heal là 5 giây
+    last_used = 0  # Lần sử dụng gần nhất của Heal
     def __init__(self, game, x, y):
         self.game = game
         self._layer = PLAYER_LAYER
@@ -22,6 +24,24 @@ class Heal(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y - TILESIZE // 2
+
+    @classmethod
+    def can_create(cls):
+        # """Kiểm tra nếu có thể tạo Attack dựa trên cooldown."""
+        # current_time = pygame.time.get_ticks()
+        # if current_time - cls.last_used >= cls.cooldown:
+        #     cls.last_used = current_time
+        #     return True
+        # return False
+        """Kiểm tra nếu cooldown đã hết mà không cập nhật last_used."""
+        current_time = pygame.time.get_ticks()
+        return (current_time - cls.last_used) >= cls.cooldown
+
+    def use_skill(self):
+        """Gọi khi kỹ năng thực sự được kích hoạt để cập nhật last_used."""
+        if self.can_create():
+            self.__class__.last_used = pygame.time.get_ticks()
+            # Thực hiện các hành động khác khi sử dụng kỹ năng
 
     def update(self):
         self.animate()
