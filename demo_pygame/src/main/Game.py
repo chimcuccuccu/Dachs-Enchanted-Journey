@@ -158,6 +158,11 @@ class Game:
                     self.all_sprites.add(heal)
                     self.heal.add(heal)
                     heal.use_skill()  # Cập nhật last_used khi sử dụng
+                    heal.apply_heal()
+                elif event.type == pygame.USEREVENT + 1:
+                    # Khôi phục alpha của Player
+                    self.player.image.set_alpha(255)  # Trở lại bình thường
+                    pygame.time.set_timer(pygame.USEREVENT + 1, 0)  # Dừng bộ đếm
 
     def update(self):
         self.all_sprites.update()
@@ -171,6 +176,7 @@ class Game:
         self.visible_sprites.custom_draw(self.player)
         self.clock.tick(FPS)
         pygame.display.update()
+        self.player.draw_health_bar()
         self.icon_cooldown.draw()
         pygame.display.flip()
 

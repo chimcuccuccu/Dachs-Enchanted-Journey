@@ -1,6 +1,7 @@
 import pygame
 import math
 
+from demo_pygame.src.status.Collide import Collide
 from demo_pygame.src.utilz.Config import *
 
 class Player(pygame.sprite.Sprite):
@@ -30,11 +31,17 @@ class Player(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
+        self.collider = Collide(game, self)
+
+        self.max_health = 100  # Giả định máu tối đa là 100
+        self.current_health = 100  # Bắt đầu với full máu
+
     def update(self):
         self.movement()
         self.animate()
         self.collide_coin()
-        self.collide_enemy()
+        self.collider.collide_enemy()
+        self.draw_health_bar()
 
         # Cập nhật vị trí người chơi
         self.rect.x += self.x_change
@@ -61,7 +68,8 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         self.movement()
         self.animate()
-        self.collide_enemy()
+        self.collider.collide_enemy()
+        self.draw_health_bar()
 
         self.rect.x += self.x_change
         for collidable in self.game.collidables:
@@ -103,14 +111,6 @@ class Player(pygame.sprite.Sprite):
             if self.rect.bottom < self.game.map_height:
                 self.y_change += PLAYER_SPEED
                 self.facing = 'down'
-
-    def collide_enemy(self):
-        # Kiểm tra va chạm với kẻ thù
-        hits = pygame.sprite.spritecollide(self, self.game.enemies, False)
-
-        if hits:
-            self.kill()  # Xóa người chơi khỏi nhóm sprite
-            self.game.playing = False  # Dừng trò chơi
 
     def collide_coin(self):
         # Kiểm tra va chạm với đồng xu
@@ -176,3 +176,28 @@ class Player(pygame.sprite.Sprite):
 
         self.image = pygame.transform.scale(self.image, (self.width * self.scale_factor, self.height * self.scale_factor))
 
+    def heal(self, amount):
+        """Tăng lượng máu cho nhân vật."""
+        self.current_health += amount
+        if self.current_health > self.max_health:
+            self.current_health = self.max_health  # Giới hạn máu không vượt quá tối đa
+
+    def draw_health_bar(self):
+        """Vẽ thanh máu ở góc trên bên phải màn hình."""
+        bar_width = 200  # Chiều rộng của thanh máu
+        bar_height = 20  # Chiều cao của thanh máu
+        bar_x = self.game.screen.get_width() - bar_width - 20  # Cách lề phải 20 pixels
+        bar_y = 20  # Cách lề trên 20 pixels
+
+        # Tính tỉ lệ máu dựa trên current_health và max_health
+        health_ratio = self.current_health / self.max_health
+        health_bar_width = bar_width * health_ratio
+
+        # Vẽ khung thanh máu (nền)
+        pygame.draw.rect(self.game.screen, (50, 50, 50), (bar_x, bar_y, bar_width, bar_height))  # Nền màu xám
+
+        # Vẽ thanh máu (lượng máu còn lại)
+        pygame.draw.rect(self.game.screen, (255, 0, 0), (bar_x, bar_y, health_bar_width, bar_height))  # Máu màu đỏ
+
+        # Vẽ viền xung quanh thanh máu
+        pygame.draw.rect(self.game.screen, (255, 255, 255), (bar_x, bar_y, bar_width, bar_height), 2)  # Viền trắng

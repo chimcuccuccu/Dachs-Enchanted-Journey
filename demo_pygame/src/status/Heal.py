@@ -7,7 +7,7 @@ from demo_pygame.src.utilz.Config import *
 class Heal(pygame.sprite.Sprite):
     cooldown = 10000  # Cooldown của Heal là 5 giây
     last_used = 0  # Lần sử dụng gần nhất của Heal
-    def __init__(self, game, x, y):
+    def __init__(self, game, x, y, scale_factor=1.3):
         self.game = game
         self._layer = PLAYER_LAYER
         self.groups = self.game.all_sprites, self.game.heal
@@ -18,7 +18,10 @@ class Heal(pygame.sprite.Sprite):
         self.width = TILESIZE
         self.height = TILESIZE + 16
 
+        self.scale_factor = scale_factor
         self.animation_loop = 0
+        self.animation_speed = 0.25
+        self.healed = False  # Đảm bảo chỉ hồi máu một lần
 
         self.image = self.game.heal_spritesheet.get_sprite(0, 0, self.width, self.height)
         self.rect = self.image.get_rect()
@@ -58,3 +61,10 @@ class Heal(pygame.sprite.Sprite):
         self.animation_loop += 0.25
         if self.animation_loop >= 5:
             self.kill()
+
+    def apply_heal(self):
+        """Thực hiện logic hồi máu."""
+        if not self.healed:
+            heal_amount = self.game.player.max_health * 0.5  # Hồi 50% máu tối đa
+            self.game.player.heal(heal_amount)  # Gọi phương thức heal của Player
+            self.healed = True  # Đảm bảo hồi máu chỉ 1 lần
