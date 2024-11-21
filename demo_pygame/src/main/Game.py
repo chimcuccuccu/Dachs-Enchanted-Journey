@@ -6,6 +6,7 @@ import subprocess
 
 from demo_pygame.src.entities.EnemySpawner import EnemySpawner
 from demo_pygame.src.entities.CoinSpawner import CoinSpawner
+from demo_pygame.src.entities.NPC import NPC
 from demo_pygame.src.entities.Player import Player
 from demo_pygame.src.entities.SpriteSheet import Spritesheet
 from demo_pygame.src.levels.Map import TiledMap
@@ -62,7 +63,6 @@ class Game:
         self.heal_icon = pygame.image.load("../../res/img/heal_icon_64x64.png")
         self.icon_cooldown = IconCooldown(self)
         self.scoreboard = Scoreboard(self)
-
         self.challenge_active = False
         self.challenge_start_time = 0
         self.challenge_duration = 30
@@ -161,7 +161,7 @@ class Game:
                 self.playing = False
                 self.running = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE and Attack.can_create():
+                if event.key == pygame.K_SPACE:
                     if self.player.facing == 'up':
                         attack = Attack(self, self.player.rect.x, self.player.rect.y - TILESIZE)
                     if self.player.facing == 'down':
@@ -174,7 +174,7 @@ class Game:
                     self.all_sprites.add(attack)
                     self.attacks.add(attack)        # cái này nữa, mấy cái bên dưới nữa
                     attack.use_skill()  # Cập nhật last_used khi sử dụng
-                elif event.key == pygame.K_h and AttackFire.can_create():
+                elif event.key == pygame.K_h:
                     direction = self.player.facing
                     if self.player.facing == 'up':
                         attack_fire = AttackFire(self, self.player.rect.x - 8, self.player.rect.y - TILESIZE, direction)
@@ -188,13 +188,13 @@ class Game:
                     self.all_sprites.add(attack_fire)
                     self.attacksFire.add(attack_fire) # đay nữa
                     attack_fire.use_skill()  # Cập nhật last_used khi sử dụng
-                elif event.key == pygame.K_c and Heal.can_create():
+                elif event.key == pygame.K_c:
                     heal = Heal(self, self.player.rect.x, self.player.rect.y)
                     self.visible_sprites.add(heal) # è è
                     self.all_sprites.add(heal)
                     self.heal.add(heal)
                     heal.use_skill()  # Cập nhật last_used khi sử dụng
-                    # heal.apply_heal()
+                    heal.apply_heal()
                 elif event.type == pygame.USEREVENT + 1:
                     # Khôi phục alpha của Player
                     self.player.image.set_alpha(255)  # Trở lại bình thường
@@ -212,7 +212,8 @@ class Game:
         self.clock.tick(FPS)
 
         self.player.draw_health_bar()
-
+        for npc in self.npcs:
+            npc.draw()
         self.icon_cooldown.draw()
         self.scoreboard.draw()
         pygame.display.flip()

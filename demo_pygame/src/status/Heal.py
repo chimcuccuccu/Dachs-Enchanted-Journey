@@ -48,7 +48,6 @@ class Heal(pygame.sprite.Sprite):
 
     def update(self):
         self.animate()
-        self.apply_heal()
 
     def animate(self):
         heal_animations = [self.game.heal_spritesheet.get_sprite(0, 0, self.width, self.height),

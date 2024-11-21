@@ -3,6 +3,7 @@ from demo_pygame.src.ui.Button import *
 import cv2
 from demo_pygame.src.main.Game import Game
 from demo_pygame.src.utilz.Config import WIN_WIDTH, WIN_HEIGHT
+import json
 
 pygame.init()
 pygame.font.init()
@@ -19,12 +20,18 @@ video = cv2.VideoCapture('../../res/Buttons/back_ground.mp4')
 
 button_click_sound = pygame.mixer.Sound('../../res/Ngan/sound_effects/button_pressed.mp3')
 button_hover_sound = pygame.mixer.Sound('../../res/Ngan/sound_effects/button_pressed.mp3')
+lose_sound = pygame.mixer.Sound('../../res/Ngan/sound_effects/lose_sound.wav')
+
 
 def get_font(size):
     return pygame.font.Font('../../res/fonts/ChangaOne-Regular.ttf', size)
 
+
 def get_font_button(size):
     return pygame.font.Font('../../res/fonts/Bungee-Regular.otf', size)
+
+def get_font_scoreboard(size):
+    return pygame.font.Font('../../res/fonts/ElecstromRegular-vmyoy.otf', size)
 
 def fade(screen, width, height, color=(0, 0, 0), speed=5):
     fade_surface = pygame.Surface((width, height))
@@ -35,6 +42,7 @@ def fade(screen, width, height, color=(0, 0, 0), speed=5):
         pygame.display.update()
         pygame.time.delay(1)
 
+
 def play():
     fade(SCREEN, screen_width, screen_height)
     game = Game()
@@ -43,8 +51,9 @@ def play():
 
     while True:
         if not game.running:
-            game_over_screen()
+            game_over_screen(game.scoreboard.score)
             return
+
 
 def main_menu():
     clock = pygame.time.Clock()
@@ -68,7 +77,7 @@ def main_menu():
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-        MENU_TEXT = get_font(135).render("MAIN MENU", True, "#fde294")
+        MENU_TEXT = get_font(145).render("Dách's EJ", True, "#fde294")
         MENU_RECT = MENU_TEXT.get_rect(center=(screen_width // 2, 200))
 
         base_image = pygame.image.load("../../res/Buttons/Play_Default.png")
@@ -79,12 +88,15 @@ def main_menu():
 
         button_x = screen_width // 2
         button_y = screen_height // 2
-        
-        PLAY_BUTTON = Button(image=base_image, pos=(button_x, button_y), base_image=base_image, hover_image=hover_image,
-                             text_input="PLAY", font=get_font_button(60), base_color="#a4925f", hovering_color="#a4925f", text_offset=(0, 0), click_sound=button_click_sound)
 
-        QUIT_BUTTON = Button(image=base_image, pos=(button_x, button_y + 150), base_image=base_image, hover_image=hover_image,
-                             text_input="QUIT", font=get_font_button(60), base_color="#a4925f", hovering_color="#a4925f", text_offset=(0, 0), click_sound=button_click_sound)
+        PLAY_BUTTON = Button(image=base_image, pos=(button_x, button_y), base_image=base_image, hover_image=hover_image,
+                             text_input="PLAY", font=get_font_button(60), base_color="#a4925f",
+                             hovering_color="#a4925f", text_offset=(0, 0), click_sound=button_click_sound)
+
+        QUIT_BUTTON = Button(image=base_image, pos=(button_x, button_y + 150), base_image=base_image,
+                             hover_image=hover_image,
+                             text_input="QUIT", font=get_font_button(60), base_color="#a4925f",
+                             hovering_color="#a4925f", text_offset=(0, 0), click_sound=button_click_sound)
 
         name_back_rect = name_back_image.get_rect(center=MENU_RECT.center)
 
@@ -114,7 +126,35 @@ def main_menu():
         pygame.display.update()
         clock.tick(200)
 
-def game_over_screen():
+
+def save_score(score):
+    try:
+        with open('../../res/scores.json', 'r') as file:
+            scores = json.load(file)
+    except FileNotFoundError:
+        scores = []
+
+    scores.append(score)
+    scores = scores[-5:]  # Keep only the 5 most recent scores
+
+    with open('../../res/scores.json', 'w') as file:
+        json.dump(scores, file)
+
+
+def get_recent_scores():
+    try:
+        with open('../../res/scores.json', 'r') as file:
+            scores = json.load(file)
+    except FileNotFoundError:
+        scores = []
+
+    return scores
+
+
+def game_over_screen(score):
+    save_score(score)
+    recent_scores = get_recent_scores()
+    lose_sound.play()
     while True:
         SCREEN.fill("black")
 
@@ -127,20 +167,35 @@ def game_over_screen():
         SCREEN.blit(GAME_OVER_TEXT, GAME_OVER_RECT)
         SCREEN.blit(PLAY_AGAIN_TEXT, PLAY_AGAIN_RECT)
 
+        # Draw background rectangle for scores
+        score_bg_rect = pygame.Rect(screen_width // 2 - 200, 400, 400, 40 * len(recent_scores) + 20)
+        pygame.draw.rect(SCREEN, "#333333", score_bg_rect)
+        pygame.draw.rect(SCREEN, "#740938", score_bg_rect, 2)
+
+        # Display recent scores
+        for i, recent_score in enumerate(recent_scores):
+            score_text = get_font_scoreboard(40).render(f"Score {i + 1}: {recent_score}", True, "#ffffff")
+            score_rect = score_text.get_rect(center=(screen_width // 2, 435 + i * 40))
+            SCREEN.blit(score_text, score_rect)
+
         button_x = screen_width // 2
         button_y = screen_height // 2
 
         base_image = pygame.image.load("../../res/Buttons/Play_Default.png")
-        base_image = pygame.transform.scale(base_image, (280, 120))
+        base_image = pygame.transform.scale(base_image, (187, 80))
 
         hover_image = pygame.image.load('../../res/Buttons/Play_Hover.png')
-        hover_image = pygame.transform.scale(hover_image, (280, 120))
+        hover_image = pygame.transform.scale(hover_image, (187, 80))
 
-        RESTART_BUTTON = Button(image=base_image, pos=(button_x + 300, button_y + 100), base_image=base_image, hover_image=hover_image,
-                             text_input="YES", font=get_font_button(50), base_color="#a4925f", hovering_color="#a4925f", text_offset=(0, 0), click_sound=button_click_sound)
+        RESTART_BUTTON = Button(image=base_image, pos=(button_x + 100, button_y + 250), base_image=base_image,
+                                hover_image=hover_image,
+                                text_input="YES", font=get_font_button(40), base_color="#a4925f",
+                                hovering_color="#a4925f", text_offset=(0, 0), click_sound=button_click_sound)
 
-        QUIT_BUTTON = Button(image=base_image, pos=(button_x - 300, button_y + 100), base_image=base_image, hover_image=hover_image,
-                             text_input="NO", font=get_font_button(60), base_color="#a4925f", hovering_color="#a4925f", text_offset=(0, 0), click_sound=button_click_sound)
+        QUIT_BUTTON = Button(image=base_image, pos=(button_x - 100, button_y + 250), base_image=base_image,
+                             hover_image=hover_image,
+                             text_input="NO", font=get_font_button(40), base_color="#a4925f", hovering_color="#a4925f",
+                             text_offset=(0, 0), click_sound=button_click_sound)
 
         MOUSE_POS = pygame.mouse.get_pos()
 

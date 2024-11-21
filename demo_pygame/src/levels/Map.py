@@ -115,10 +115,10 @@ class TiledMap(pygame.sprite.Sprite):
                     elif obj.name == 'NPC':
                         npc_image = pygame.image.load('../../res/img/single.png').convert_alpha()
                         npc_image = pygame.transform.scale(npc_image, (obj.width, obj.height))
-                        object = NPC(game, obj.x * self.scale_factor, obj.y * self.scale_factor, obj.width, obj.height, '../../res/img/single.png')
-                        game.visible_sprites.add(object)
-                        game.all_sprites.add(object)
-                        game.collidables.append(object)
+                        npc = NPC(game, obj.x * self.scale_factor, obj.y * self.scale_factor, obj.width, obj.height, '../../res/img/single.png')
+                        game.visible_sprites.add(npc)
+                        game.all_sprites.add(npc)
+                        game.collidables.append(npc)
                         self.npc_image = npc_image
 
                     elif obj.name == 'Enemy':
