@@ -41,7 +41,7 @@
  </tileset>
  <tileset firstgid="4321" source="../Objects.tsx"/>
  <tileset firstgid="4325" name="chest_01" tilewidth="16" tileheight="16" tilecount="4" columns="4">
-  <image source="../../../../../Ngan/tài nguyên Py/mystic_woods_free_2.2/sprites/objects/chest_01.png" width="64" height="16"/>
+  <image source="../tài nguyên Py/mystic_woods_free_2.2/sprites/objects/chest_01.png" width="64" height="16"/>
  </tileset>
  <layer id="1" name="grass" width="50" height="30">
   <data encoding="base64" compression="zlib">

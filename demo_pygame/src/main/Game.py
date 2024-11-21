@@ -194,6 +194,11 @@ class Game:
                     self.all_sprites.add(heal)
                     self.heal.add(heal)
                     heal.use_skill()  # Cập nhật last_used khi sử dụng
+                    heal.apply_heal()
+                elif event.type == pygame.USEREVENT + 1:
+                    # Khôi phục alpha của Player
+                    self.player.image.set_alpha(255)  # Trở lại bình thường
+                    pygame.time.set_timer(pygame.USEREVENT + 1, 0)  # Dừng bộ đếm
 
     # def start_snake_game(self):
     #     subprocess.run(['python', 'demo_pygame/src/games/snake.py'])
@@ -205,6 +210,9 @@ class Game:
         self.screen.fill(BLACK)
         self.visible_sprites.custom_draw(self.player)
         self.clock.tick(FPS)
+
+        self.player.draw_health_bar()
+
         self.icon_cooldown.draw()
         self.scoreboard.draw()
         pygame.display.flip()
