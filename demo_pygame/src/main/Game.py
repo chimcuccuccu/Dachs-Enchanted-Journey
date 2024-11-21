@@ -1,5 +1,8 @@
+import time
+
 import pygame.display
 import pytmx
+import subprocess
 
 from demo_pygame.src.entities.EnemySpawner import EnemySpawner
 from demo_pygame.src.entities.CoinSpawner import CoinSpawner
@@ -8,6 +11,8 @@ from demo_pygame.src.entities.SpriteSheet import Spritesheet
 from demo_pygame.src.levels.Map import TiledMap
 from demo_pygame.src.status.Attack import Attack
 from demo_pygame.src.status.AttackFire import AttackFire
+from demo_pygame.src.status.Dialog import Dialog
+from demo_pygame.src.objects.Box import Box
 from demo_pygame.src.ui.IconCooldown import IconCooldown
 from demo_pygame.src.ui.Scoreboard import Scoreboard
 from demo_pygame.src.status.Heal import Heal
@@ -37,12 +42,14 @@ class Game:
         self.heal_spritesheet = Spritesheet('../../res/img/heal.png')
         self.coin_spritesheet = Spritesheet('../../res/img/coin.png')
         self.intro_backgroud = pygame.image.load('../../res/img/introbackground.png')
+        self.box_spritesheet = Spritesheet('../../res/Ngan/tài nguyên Py/mystic_woods_free_2.2/sprites/objects/chest_01.png')
         self.map_width = 3200
         self.map_height = 1920
         self.score = 0
 
         self.map_image = pygame.image.load('../../res/img/Map1.png')  # Load your map image
         self.enemy_spawner = EnemySpawner(self, self.map_image)
+
 
         self.collidables = []
 
@@ -54,6 +61,22 @@ class Game:
         self.attackfire_icon = pygame.image.load("../../res/img/attackfire_icon_64x64.png")
         self.heal_icon = pygame.image.load("../../res/img/heal_icon_64x64.png")
         self.icon_cooldown = IconCooldown(self)
+        self.scoreboard = Scoreboard(self)
+
+        self.challenge_active = False
+        self.challenge_start_time = 0
+        self.challenge_duration = 30
+        self.enemies_destroyed = 0
+
+    def start_enemy_challenge(self):
+        self.challenge_active = True
+        self.challenge_start_time = time.time()
+        self.enemies_destroyed = 0
+        self.spawn_enemies_faster()
+
+    def spawn_enemies_faster(self):
+        spawner = EnemySpawner(self, self.nganMapSprite)
+        spawner.spawn_random_enemies(10)
 
     def createTilemap(self):
         self.level = TiledMap('../../res/Ngan/maps/Map1.tmx', self)
@@ -106,6 +129,18 @@ class Game:
             self.visible_sprites.add(coin)
             self.all_sprites.add(coin)
 
+        i = 0
+        for pos in self.level.box_positions:
+            i += 1
+            self.box = Box(self, pos[0], pos[1], i)
+            self.visible_sprites.add(self.box)
+            self.all_sprites.add(self.box)
+            self.boxs.add(self.box)
+            # self.collidables.append(self.box)
+
+        # for pos in self.level.box_positions:
+        #     print (pos[0], pos[1])
+
     def new(self):
         self.playing = True
 
@@ -116,7 +151,8 @@ class Game:
         self.attacksFire = pygame.sprite.LayeredUpdates()
         self.doors = pygame.sprite.LayeredUpdates()
         self.heal = pygame.sprite.LayeredUpdates()
-
+        self.npcs = pygame.sprite.LayeredUpdates()
+        self.boxs = pygame.sprite.LayeredUpdates()
         self.createTilemap()
 
     def events(self):
@@ -159,19 +195,22 @@ class Game:
                     self.heal.add(heal)
                     heal.use_skill()  # Cập nhật last_used khi sử dụng
 
+    # def start_snake_game(self):
+    #     subprocess.run(['python', 'demo_pygame/src/games/snake.py'])
+
     def update(self):
         self.all_sprites.update()
 
-        door_hits = pygame.sprite.spritecollide(self.player, self.doors, False)
-        for door in door_hits:
-            door.open()
+        # door_hits = pygame.sprite.spritecollide(self.player, self.doors, False)
+        # for door in door_hits:
+        #     door.open()
 
     def draw(self):
         self.screen.fill(BLACK)
         self.visible_sprites.custom_draw(self.player)
         self.clock.tick(FPS)
-        pygame.display.update()
         self.icon_cooldown.draw()
+        self.scoreboard.draw()
         pygame.display.flip()
 
     def main(self):

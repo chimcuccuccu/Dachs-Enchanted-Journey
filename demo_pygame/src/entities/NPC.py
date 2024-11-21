@@ -1,11 +1,15 @@
 import pygame
+from demo_pygame.src.utilz.Config import NPC_LAYER
+
 
 class NPC(pygame.sprite.Sprite):
-    def __init__(self, game, x, y):
+    def __init__(self, game, x, y, width, height, image_path):
         super().__init__()
+        self._layer = NPC_LAYER
         self.game = game
-        self.image = pygame.image.load('path/to/npc/image.png').convert_alpha()
-        self.image = pygame.transform.scale(self.image, (self.image.get_width() * 4, self.image.get_height() * 4))
+        self.image = pygame.image.load(image_path)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.dialog = None  # Initialize dialog attribute
+

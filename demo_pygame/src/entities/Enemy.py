@@ -32,6 +32,9 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
+    def destroy(self):
+        self.kill()
+
     def update(self):
         self.movement()
         self.animate()

@@ -62,6 +62,7 @@ class Player(pygame.sprite.Sprite):
         self.movement()
         self.animate()
         self.collide_enemy()
+        self.check_collisions()
 
         self.rect.x += self.x_change
         for collidable in self.game.collidables:
@@ -119,6 +120,18 @@ class Player(pygame.sprite.Sprite):
             # Cộng điểm cho mỗi đồng xu thu thập được
             self.game.score += len(hits)
 
+    def check_collisions(self):
+        box_hits = pygame.sprite.spritecollide(self, self.game.boxs, False)
+        for box in box_hits:
+            if self.rect.colliderect(box.rect):
+                if self.facing == 'up':
+                    self.rect.top = box.rect.bottom
+                elif self.facing == 'down':
+                    self.rect.bottom = box.rect.top
+                elif self.facing == 'left':
+                    self.rect.left = box.rect.right
+                elif self.facing == 'right':
+                    self.rect.right = box.rect.left
 
     def animate(self):
         # Các ảnh động dựa trên hướng di chuyển

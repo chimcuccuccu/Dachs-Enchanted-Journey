@@ -23,19 +23,11 @@ class Scoreboard:
         self.score = 0
 
     def draw(self):
-        # Vẽ nền bảng điểm
-        # pygame.draw.rect(self.game.screen, self.background_color, (10, 10, 300, 120), border_radius=10)  # Rectangle với góc bo tròn
-
         # Vẽ điểm số hiện tại
         score_text = self.font.render(f' {self.score}', True, self.score_text_color)
         screen_center_x = self.game.screen.get_rect().centerx
         score_rect = score_text.get_rect(midtop=(screen_center_x, 50))  # Giữa trên cùng
         self.game.screen.blit(score_text, score_rect)
-
-        # Vẽ điểm số cao nhất
-        # high_score_text = self.font_small.render(f'High Score: {self.high_score}', True, self.high_score_text_color)
-        # high_score_rect = high_score_text.get_rect(center=(160, 90))  # Giữa
-        # self.game.screen.blit(high_score_text, high_score_rect)
 
     def add_score(self, value):
 

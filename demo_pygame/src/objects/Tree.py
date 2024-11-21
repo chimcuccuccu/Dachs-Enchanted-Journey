@@ -6,7 +6,7 @@ from demo_pygame.src.utilz.Config import TREE_LAYER, TILESIZE
 class Objects (pygame.sprite.Sprite):
     def __init__(self, game, x, y, width, height, image_path, scale_factor = 3, load_image = True):
         self.game = game
-        self._layer = 20
+        self._layer = TREE_LAYER
         self.groups = self.game.all_sprites
         pygame.sprite.Sprite.__init__(self, self.groups)
 
