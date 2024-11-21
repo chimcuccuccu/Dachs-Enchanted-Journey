@@ -3,6 +3,7 @@ import pytmx
 from pygame.transform import scale
 
 from demo_pygame.src.entities.Enemy import Enemy
+from demo_pygame.src.entities.NPC import NPC
 from demo_pygame.src.objects.Tree import Objects
 from demo_pygame.src.utilz.Config import *
 
@@ -13,9 +14,12 @@ class TiledMap(pygame.sprite.Sprite):
         self.scale_factor = scale_factor
         self.width = self.tmxdata.width * self.tmxdata.tilewidth * self.scale_factor
         self.height = self.tmxdata.height * self.tmxdata.tileheight * self.scale_factor
+        self.box_positions = []
         self.make_map(game)
-        self.door_position = None
+
+
         self.rect = pygame.Rect(0, 0, self.width, self.height)
+
     def render_layer(self, surface, layer):
         ti = self.tmxdata.get_tile_image_by_gid
         if isinstance(layer, pytmx.TiledTileLayer):
@@ -108,9 +112,24 @@ class TiledMap(pygame.sprite.Sprite):
                         game.all_sprites.add(object)
                         game.collidables.append(object)
 
+                    elif obj.name == 'NPC':
+                        npc_image = pygame.image.load('../../res/img/single.png').convert_alpha()
+                        npc_image = pygame.transform.scale(npc_image, (obj.width, obj.height))
+                        object = NPC(game, obj.x * self.scale_factor, obj.y * self.scale_factor, obj.width, obj.height, '../../res/img/single.png')
+                        game.visible_sprites.add(object)
+                        game.all_sprites.add(object)
+                        game.collidables.append(object)
+                        self.npc_image = npc_image
+
                     elif obj.name == 'Enemy':
                         enemy = Enemy(game, obj.x * self.scale_factor, obj.y * self.scale_factor)
                         game.visible_sprites.add(enemy)
                         game.all_sprites.add(enemy)
+
+                    # elif obj.name == 'Box1':
+                    #     self.box_positions_x = obj.x * self.scale_factor
+                    #     self.box_positions_y = obj.y * self.scale_factor
+                    elif obj.name == 'Box':
+                        self.box_positions.append((obj.x * self.scale_factor, obj.y * self.scale_factor))
 
         return pygame.Surface((self.width, self.height), pygame.SRCALPHA)
