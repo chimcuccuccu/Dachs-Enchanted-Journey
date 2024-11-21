@@ -201,10 +201,6 @@ class Game:
     def update(self):
         self.all_sprites.update()
 
-        # door_hits = pygame.sprite.spritecollide(self.player, self.doors, False)
-        # for door in door_hits:
-        #     door.open()
-
     def draw(self):
         self.screen.fill(BLACK)
         self.visible_sprites.custom_draw(self.player)
