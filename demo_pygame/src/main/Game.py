@@ -174,9 +174,9 @@ class Game:
     def draw(self):
         self.screen.fill(BLACK)
         self.visible_sprites.custom_draw(self.player)
+        self.player.draw_health_bar()  # Vẽ thanh máu trực tiếp lên màn hình
         self.clock.tick(FPS)
         pygame.display.update()
-        self.player.draw_health_bar()
         self.icon_cooldown.draw()
         pygame.display.flip()
 

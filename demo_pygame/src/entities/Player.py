@@ -183,15 +183,18 @@ class Player(pygame.sprite.Sprite):
             self.current_health = self.max_health  # Giới hạn máu không vượt quá tối đa
 
     def draw_health_bar(self):
-        """Vẽ thanh máu ở góc trên bên phải màn hình."""
+        """Vẽ thanh máu trực tiếp ở góc trên bên phải màn hình."""
         bar_width = 200  # Chiều rộng của thanh máu
         bar_height = 20  # Chiều cao của thanh máu
-        bar_x = self.game.screen.get_width() - bar_width - 20  # Cách lề phải 20 pixels
-        bar_y = 20  # Cách lề trên 20 pixels
+        bar_margin = 20  # Khoảng cách từ lề phải và lề trên
 
-        # Tính tỉ lệ máu dựa trên current_health và max_health
+        # Tính tọa độ x dựa trên chiều rộng của màn hình
+        bar_x = self.game.screen.get_width() - bar_width - bar_margin
+        bar_y = bar_margin  # Cách lề trên một khoảng cố định
+
+        # Tính tỷ lệ máu dựa trên current_health và max_health
         health_ratio = self.current_health / self.max_health
-        health_bar_width = bar_width * health_ratio
+        health_bar_width = int(bar_width * health_ratio)
 
         # Vẽ khung thanh máu (nền)
         pygame.draw.rect(self.game.screen, (50, 50, 50), (bar_x, bar_y, bar_width, bar_height))  # Nền màu xám
