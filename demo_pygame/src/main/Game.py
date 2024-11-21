@@ -161,7 +161,7 @@ class Game:
                 self.playing = False
                 self.running = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_SPACE and Attack.can_create():
                     if self.player.facing == 'up':
                         attack = Attack(self, self.player.rect.x, self.player.rect.y - TILESIZE)
                     if self.player.facing == 'down':
@@ -174,7 +174,7 @@ class Game:
                     self.all_sprites.add(attack)
                     self.attacks.add(attack)        # cái này nữa, mấy cái bên dưới nữa
                     attack.use_skill()  # Cập nhật last_used khi sử dụng
-                elif event.key == pygame.K_h:
+                elif event.key == pygame.K_h and AttackFire.can_create():
                     direction = self.player.facing
                     if self.player.facing == 'up':
                         attack_fire = AttackFire(self, self.player.rect.x - 8, self.player.rect.y - TILESIZE, direction)
@@ -188,13 +188,13 @@ class Game:
                     self.all_sprites.add(attack_fire)
                     self.attacksFire.add(attack_fire) # đay nữa
                     attack_fire.use_skill()  # Cập nhật last_used khi sử dụng
-                elif event.key == pygame.K_c:
+                elif event.key == pygame.K_c and Heal.can_create():
                     heal = Heal(self, self.player.rect.x, self.player.rect.y)
                     self.visible_sprites.add(heal) # è è
                     self.all_sprites.add(heal)
                     self.heal.add(heal)
                     heal.use_skill()  # Cập nhật last_used khi sử dụng
-                    heal.apply_heal()
+                    # heal.apply_heal()
                 elif event.type == pygame.USEREVENT + 1:
                     # Khôi phục alpha của Player
                     self.player.image.set_alpha(255)  # Trở lại bình thường
