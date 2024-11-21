@@ -210,11 +210,9 @@ class Game:
         self.screen.fill(BLACK)
         self.visible_sprites.custom_draw(self.player)
         self.clock.tick(FPS)
-<<<<<<< HEAD
-=======
-        pygame.display.update()
+
         self.player.draw_health_bar()
->>>>>>> 0f7aff008cf772aef9a541ee029c443282c3a6fa
+
         self.icon_cooldown.draw()
         self.scoreboard.draw()
         pygame.display.flip()

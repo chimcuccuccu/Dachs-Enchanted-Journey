@@ -68,13 +68,13 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         self.movement()
         self.animate()
-<<<<<<< HEAD
-        self.collide_enemy()
-        self.check_collisions()
-=======
+
+#         self.collide_enemy()
+#         self.check_collisions()
+
         self.collider.collide_enemy()
         self.draw_health_bar()
->>>>>>> 0f7aff008cf772aef9a541ee029c443282c3a6fa
+
 
         self.rect.x += self.x_change
         for collidable in self.game.collidables:
