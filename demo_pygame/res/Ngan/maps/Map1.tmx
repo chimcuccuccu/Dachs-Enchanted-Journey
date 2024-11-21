@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="24" nextobjectid="586">
+ <editorsettings>
+  <export target="Map1.tmx" format="tmx"/>
+ </editorsettings>
+ <tileset firstgid="1" name="walls" tilewidth="16" tileheight="16" tilecount="64" columns="8">
+  <image source="../tài nguyên Py/mystic_woods_free_2.2/sprites/tilesets/walls/walls.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="65" name="wooden_door_b" tilewidth="16" tileheight="16" tilecount="2" columns="2">
+  <image source="../tài nguyên Py/mystic_woods_free_2.2/sprites/tilesets/walls/wooden_door_b.png" width="32" height="16"/>
+ </tileset>
+ <tileset firstgid="67" name="grass" tilewidth="16" tileheight="16" tilecount="1" columns="1">
+  <image source="../tài nguyên Py/mystic_woods_free_2.2/sprites/tilesets/grass.png" width="16" height="16"/>
+ </tileset>
+ <tileset firstgid="68" name="flooring" tilewidth="16" tileheight="16" tilecount="15" columns="5">
+  <image source="../tài nguyên Py/mystic_woods_free_2.2/sprites/tilesets/floors/flooring.png" width="80" height="48"/>
+ </tileset>
+ <tileset firstgid="83" name="objects" tilewidth="16" tileheight="16" tilecount="208" columns="16">
+  <image source="../tài nguyên Py/mystic_woods_free_2.2/sprites/objects/objects.png" width="256" height="208"/>
+ </tileset>
+ <tileset firstgid="291" name="TX Props" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
+  <image source="../tài nguyên Py/Pixel Art Top Down - Basic/Texture/TX Props.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="1315" name="Interiors_free_16x16" tilewidth="16" tileheight="16" tilecount="1424" columns="16">
+  <image source="../tài nguyên Py/Modern_Interiors_Free_v2.2/Modern tiles_Free/Interiors_free/16x16/Interiors_free_16x16.png" width="256" height="1424"/>
+ </tileset>
+ <tileset firstgid="2739" name="plains" tilewidth="16" tileheight="16" tilecount="72" columns="6">
+  <image source="../tài nguyên Py/mystic_woods_free_2.2/sprites/tilesets/plains.png" width="96" height="192"/>
+ </tileset>
+ <tileset firstgid="2811" name="fences" tilewidth="16" tileheight="16" tilecount="16" columns="4">
+  <image source="../tài nguyên Py/mystic_woods_free_2.2/sprites/tilesets/fences.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="2827" name="spr_grass_tileset" tilewidth="16" tileheight="16" tilecount="870" columns="30">
+  <image source="../tài nguyên Py/Pixelarium - GrassLands - Free Version/Pixelarium - GrassLands - Free Version/Pack content/Sprites/Tileset/spr_grass_tileset.png" width="480" height="464"/>
+ </tileset>
+ <tileset firstgid="3697" name="Outdoor_Decor_Free" tilewidth="16" tileheight="16" tilecount="84" columns="7">
+  <image source="../tài nguyên Py/Cute_Fantasy_Free/Cute_Fantasy_Free/Outdoor decoration/Outdoor_Decor_Free.png" width="112" height="192"/>
+ </tileset>
+ <tileset firstgid="3781" name="player" tilewidth="16" tileheight="16" tilecount="540" columns="18">
+  <image source="../tài nguyên Py/mystic_woods_free_2.2/sprites/characters/player.png" width="288" height="480"/>
+ </tileset>
+ <tileset firstgid="4321" source="../Objects.tsx"/>
+ <layer id="1" name="grass" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztz7kRgDAUA1FFLoKjAY4GMETuvycUO3BCAN+sZl6uLZIKUHm6t///qWNI0miTzenbHa2mxd9X22wP3HH4e7bTrsAdUX732gEAAAAAAGK6Abd3cuI=
+  </data>
+ </layer>
+ <layer id="2" name="street" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztmMEOwiAMhjnz/o+CzqAz6pPJQRKChZZSXIk06W0t+zpafmYMbt4acw1+s4SHDzIX3u2E+H0Cjlhris/IsQV/Zv6akENz7SHLOTZG7Sk9Fv08qD4+Y+DsHQ095gXW8LbcU9EvE3HU4kefQYvjO8cIDveJw+aDdg5q3L9wSOmvozmkzgYtHLWzgaK/tHD0zsvFsTgk1pfKE+N2YE6mZyOVA8rTosd7ObD5KDV3qd+9leMBzEVIO2McUB6OHpfUiVCuXl3S2of5/uTcDyU5ol6h/hMq7c+dwSLF4ZL3b+2PEgv1fl+qnWfkyxl6Obhe4pDKCRk2L2ozRBMHxzD2VJdy6tSqdX9hb9RTqCk=
+  </data>
+ </layer>
+ <layer id="3" name="floor" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztz0sKgDAMRdEsrlrxg93/aswwIEXjJKbcA2+QWa4IcFd008fNAf/2rI5V3WLuLeDfHk/Hrjvknx2Wpyl7x2nWYt589KYjg1E6AAAAAABAThff5xph
+  </data>
+ </layer>
+ <layer id="4" name="wall_house" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt0jsKgEAMBNA5i7/C9f7nUxBZsLAQcVHegynSDUkSnjRu6W9matAX3tSl/jvfU1LvNzTu8ndz9n0fyWleGvUCAAAArq2bXQSL
+  </data>
+ </layer>
+ <layer id="16" name="door" width="50" height="30" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztzjEBAAAIA6Bls38oK+zTAxKQAACfzXUAAAAAqCwoNABD
+  </data>
+ </layer>
+ <layer id="5" name="top_wall_house" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1EsKgDAMRdHgbyDqwLoj978nCyp0oEibqlHugTdrIK9FRWwofMrEVC/se6ZVzHbZttCjh60eo4/b0kTOWuoRGiLPf7VHLet/an+/6faN0lz16B/ZQmRWzoffylGs3j8AAAAAAPiHBWOkAjA=
+  </data>
+ </layer>
+ <layer id="6" name="decor" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzlV7lOAzEQtUSRA2VpOcQl+ANKAggooYUfQBwlgQIqFCqokBANHRJHTQG0pEoJfEEiwWcQUJgVtjI4sx57vZuAeJLlnV179z3PjMcrRPfwBO25i9/3QTloXdeg1SPG3Wa/++2MECtwvSrtM+jv4N49tM2cEFu5NNm2sBvwYxQOZP8AXCuSdxn4rsP1hrRvsq3xe6BhPyUdwwTvNcu5J7KvAteXLD2miu4fgYZjDx3vBSEaBfrZtcP6J4F5j+/1w9yBBPiaYm4a4qmY4d8xFeE3HWWG76GDnor0IRV7r/DsDfl4CTQsW+hYtNSRBigdzVADut+00OALUzzUgE+9wI/T8QFzPpE/+mCdT7X5uh0XXAwp3mHvoiHEIIwf0uacM7YNovYdV34+NfsiMNu6D12AednUBVPNjnqvQiPfbo+BlnGph/Ihhil+bHm5IPwe9d5mvt2ehbFz0CaZuMB7iW0dNvGjgNfeFKc9vbQ9AXMWgvZ3dRqcT3Vtqu6U5H1cw9OIjyhwtVQB88d5oBB37al6xcF09sLg9nCVBxhJrT21Rjp8zl44Hx8Na+G69+tQaxTXvxXGT4rfJfRXCdRuzuecf13OjiG49eX0/3ZE8e+kLir2diz+FUOOptzQYZOzPjDFXkn77gjYowQXfHbWoXxC7WsUkqyXUfFQBB4ziIteb+L8K+u84+zZcffFLJw7ctDyvT+vdf/ZAPP2PV9FQeWJT75SudZJUNw5TuGcv7j3UnnfLR0+Mann/X/CF/ZtesM=
+  </data>
+ </layer>
+ <layer id="23" name="carpet" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztz7kNgEAUQ8EfbREcDXA0wNF/W7gFSNBKM9LL7SqgZ0OrGtOU5vb3mu+WbF/TlvaOfxzZfqYr3R3/AAAAAOC9B3yNAlM=
+  </data>
+ </layer>
+ <objectgroup id="21" name="Tree">
+  <object id="285" name="Tree-Tall" gid="4321" x="448" y="464" width="23" height="42"/>
+  <object id="286" name="Tree-Tall" gid="4321" x="480" y="464" width="23" height="42"/>
+  <object id="287" name="Tree-Tall" gid="4321" x="512" y="464" width="23" height="42"/>
+  <object id="288" name="Tree-Tall" gid="4321" x="752" y="160" width="23" height="42"/>
+  <object id="289" name="Tree-Tall" gid="4321" x="592" y="192" width="23" height="42"/>
+  <object id="290" name="Tree-Tall" gid="4321" x="704" y="304" width="23" height="42"/>
+  <object id="291" name="Tree-Tall" gid="4321" x="688" y="384" width="23" height="42"/>
+  <object id="292" name="Tree-Big" gid="4323" x="464" y="192" width="45" height="68"/>
+  <object id="293" name="Tree-Big" gid="4323" x="336" y="64" width="45" height="68"/>
+  <object id="294" name="Tree-Big" gid="4323" x="192" y="160" width="45" height="68"/>
+  <object id="295" name="Tree-Big" gid="4323" x="368" y="432" width="45" height="68"/>
+  <object id="296" name="Tree-Big" gid="4323" x="320" y="240" width="45" height="68"/>
+  <object id="297" name="Tree-Big" gid="4323" x="112" y="128" width="45" height="68"/>
+  <object id="298" name="Tree-Big" gid="4323" x="176" y="400" width="45" height="68"/>
+  <object id="300" name="Tree-Tall" gid="4321" x="64" y="288" width="23" height="42"/>
+  <object id="304" name="Tree-Tall" gid="4321" x="368" y="304" width="23" height="42"/>
+  <object id="305" name="Tree-Tall" gid="4321" x="528" y="256" width="23" height="42"/>
+  <object id="311" name="Tree-Tall" gid="4321" x="473" y="346" width="23" height="42"/>
+  <object id="312" name="Tree-Tall" gid="4321" x="592" y="192" width="23" height="42"/>
+  <object id="316" name="Tree-Min" gid="4324" x="544" y="336" width="33" height="32"/>
+  <object id="317" name="Tree-Min" gid="4324" x="752" y="304" width="33" height="32"/>
+  <object id="318" name="Tree-Min" gid="4324" x="448" y="64" width="33" height="32"/>
+  <object id="319" name="Tree-Min" gid="4324" x="256" y="64" width="33" height="32"/>
+  <object id="320" name="Tree-Min" gid="4324" x="128" y="192" width="33" height="32"/>
+  <object id="321" name="Tree-Min" gid="4324" x="80" y="160" width="33" height="32"/>
+  <object id="322" name="Tree-Min" gid="4324" x="80" y="368" width="33" height="32"/>
+  <object id="323" name="Tree-Min" gid="4324" x="240" y="288" width="33" height="32"/>
+  <object id="324" name="Tree-Min" gid="4324" x="304" y="384" width="33" height="32"/>
+  <object id="325" name="Tree-Min" gid="4324" x="768" y="432" width="33" height="32"/>
+  <object id="326" name="Tree-Min" gid="4324" x="304" y="464" width="33" height="32"/>
+  <object id="327" name="Tree-Min" gid="4324" x="688" y="480" width="33" height="32"/>
+  <object id="409" name="Wall" x="791" y="16" width="9" height="96"/>
+  <object id="412" name="Wall" x="728" y="109" width="72" height="19"/>
+  <object id="414" name="Wall" x="728" y="128.333" width="8" height="32.3333"/>
+  <object id="416" name="Wall" x="671.44" y="141.667" width="56.3499" height="18.9583"/>
+  <object id="418" name="Wall" x="592.5" y="140.767" width="57.6818" height="19.7157"/>
+  <object id="420" name="Wall" x="592.25" y="77.25" width="7.25" height="63.75"/>
+  <object id="422" name="Wall" x="544.75" y="76" width="47.5" height="20.5"/>
+  <object id="423" name="Wall" x="544.25" y="10.75" width="8" height="65"/>
+  <object id="424" name="Wall" x="551.667" y="13" width="239.667" height="13.75"/>
+  <object id="426" name="Decor" x="560.727" y="33.2727" width="15.0909" height="29.8182"/>
+  <object id="427" name="Decor" x="592" y="37.4545" width="15.6364" height="20.3636"/>
+  <object id="428" name="Decor" x="610.727" y="25.2727" width="10.1818" height="30.9091"/>
+  <object id="429" name="Decor" x="608.909" y="80.9091" width="14.7273" height="25.4545"/>
+  <object id="430" name="Decor" x="626.182" y="88.1818" width="11.0909" height="13.6364"/>
+  <object id="431" name="Decor" x="634.545" y="81.4545" width="3.27273" height="7.81818"/>
+  <object id="432" name="Decor" x="610" y="116" width="11.8182" height="21.0909"/>
+  <object id="433" name="Decor" x="658" y="33.6364" width="28" height="11.2727"/>
+  <object id="434" name="Decor" x="705.818" y="34.7273" width="12.1818" height="21.8182"/>
+  <object id="435" name="Decor" x="753.455" y="32.7273" width="30.3636" height="22.9091"/>
+  <object id="436" name="Decor" x="769.455" y="64" width="12.1818" height="14.9091"/>
+  <object id="437" name="Decor" x="770.182" y="87.0909" width="12" height="13.6364"/>
+  <object id="442" name="House" x="544" y="0">
+   <polygon points="0,0 0,96 48,96 48,160 192,160 192,128 256,128 256,0"/>
+  </object>
+  <object id="509" name="Rock" x="195.091" y="182.545" width="25.8182" height="19.8182"/>
+  <object id="512" name="Rock" x="210.591" y="295.545" width="25.8182" height="19.8182"/>
+  <object id="513" name="Rock" x="387.091" y="166.545" width="25.8182" height="19.8182"/>
+  <object id="514" name="Rock" x="499.091" y="6.545" width="25.8182" height="19.8182"/>
+  <object id="516" name="Rock" x="467.091" y="214.545" width="25.8182" height="19.8182"/>
+  <object id="517" name="Rock" x="355.091" y="342.545" width="25.8182" height="19.8182"/>
+  <object id="518" name="Rock" x="771.091" y="214.545" width="25.8182" height="19.8182"/>
+  <object id="519" name="Rock" x="547.091" y="182.545" width="25.8182" height="19.8182"/>
+  <object id="520" name="Rock" x="67.091" y="390.545" width="25.8182" height="19.8182"/>
+  <object id="521" name="Rock" x="131.091" y="374.545" width="25.8182" height="19.8182"/>
+  <object id="523" name="Rock" x="182.455" y="272.727" width="18.3636" height="15.4545"/>
+  <object id="524" name="Rock" x="187.091" y="288.182" width="11.8182" height="13.0909"/>
+  <object id="526" name="Rock" x="114" y="255.818" width="11.9091" height="13.6364"/>
+  <object id="527" name="Rock" x="65.875" y="208.625" width="11.875" height="12.625"/>
+  <object id="528" name="Rock" x="81.2727" y="194.364" width="13.6364" height="11.0909"/>
+  <object id="529" name="Rock" x="112.364" y="208.909" width="15.0909" height="14.1818"/>
+  <object id="530" name="Rock" x="100.545" y="165.273" width="7.27273" height="7.45455"/>
+  <object id="531" name="Rock" x="177.636" y="146.909" width="13.4545" height="10.9091"/>
+  <object id="532" name="Rock" x="240.75" y="176.875" width="15" height="15.375"/>
+  <object id="533" name="Rock" x="208.545" y="65.2727" width="32.5455" height="26.3636"/>
+  <object id="535" name="Rock" x="256.909" y="96.7273" width="14.1818" height="12.9091"/>
+  <object id="536" name="Rock" x="322.125" y="48.5" width="11.5" height="13"/>
+  <object id="537" name="Rock" x="324.25" y="68.875" width="7.5" height="7.625"/>
+  <object id="539" name="Rock" x="400.5" y="48.375" width="14.625" height="15.375"/>
+  <object id="540" name="Rock" x="326.5" y="129.375" width="19.75" height="14.375"/>
+  <object id="541" name="Rock" x="369.364" y="210.455" width="13.6364" height="10.6364"/>
+  <object id="542" name="Rock" x="403.545" y="243.727" width="8.27273" height="8.27273"/>
+  <object id="543" name="Rock" x="320.727" y="257.091" width="31.5455" height="26.7273"/>
+  <object id="544" name="Rock" x="337.5" y="307.25" width="13.5" height="10.5"/>
+  <object id="545" name="Rock" x="353.25" y="450.25" width="14.5" height="13.25"/>
+  <object id="546" name="Rock" x="480.125" y="257.5" width="15.125" height="12.375"/>
+  <object id="547" name="Rock" x="512.5" y="336.875" width="14.5" height="14.875"/>
+  <object id="548" name="Rock" x="535.5" y="358" width="13.75" height="12.75"/>
+  <object id="549" name="Rock" x="530.625" y="368.25" width="25.125" height="11.625"/>
+  <object id="550" name="Rock" x="630.909" y="353.818" width="18.7273" height="13.6364"/>
+  <object id="551" name="Rock" x="596.364" y="371.818" width="7.63636" height="7.09091"/>
+  <object id="553" name="Rock" x="660.727" y="373.273" width="7.45455" height="7.27273"/>
+  <object id="554" name="Rock" x="562.909" y="384.545" width="42.9091" height="14.5455"/>
+  <object id="555" name="Rock" x="610.909" y="384.909" width="42.5455" height="14.9091"/>
+  <object id="556" name="Rock" x="601.455" y="438.545" width="11.6364" height="12.5455"/>
+  <object id="558" name="Rock" x="595.636" y="447.818" width="23.4545" height="13.2727"/>
+  <object id="559" name="Rock" x="596.545" y="291.273" width="22.9091" height="8.81818"/>
+  <object id="560" name="Rock" x="560.727" y="273" width="14.3636" height="15.0909"/>
+  <object id="561" name="Rock" x="614.273" y="240.273" width="11.2727" height="15.1818"/>
+  <object id="562" name="Rock" x="621.273" y="242.364" width="11.8182" height="13.4545"/>
+  <object id="563" name="Rock" x="619.545" y="253.727" width="11.4545" height="15.4545"/>
+  <object id="564" name="Rock" x="693" y="160.75" width="7" height="13.75"/>
+  <object id="565" name="Rock" x="629.375" y="160.5" width="6.5" height="13.75"/>
+  <object id="567" name="Rock" x="627.25" y="177.375" width="10.25" height="44.625"/>
+  <object id="568" name="Rock" x="691.75" y="177.25" width="9.125" height="44.75"/>
+  <object id="569" name="Rock" x="710.75" y="176.125" width="10.375" height="15.625"/>
+  <object id="570" name="Rock" x="717.125" y="177.875" width="11.25" height="14.5"/>
+  <object id="571" name="Rock" x="715.75" y="190.375" width="11" height="15.25"/>
+  <object id="572" name="Rock" x="465.636" y="96" width="12.1818" height="30.3636"/>
+  <object id="574" name="Rock" x="774.75" y="336.5" width="11.25" height="15.5"/>
+  <object id="575" name="Rock" x="781.75" y="338.5" width="11.25" height="14.75"/>
+  <object id="576" name="Rock" x="779.5" y="351.75" width="11.25" height="14.25"/>
+  <object id="577" name="Rock" x="690.909" y="248.182" width="24" height="16.9091"/>
+  <object id="579" name="Rock" x="722" y="222.545" width="12.3636" height="17.0909"/>
+  <object id="580" name="Rock" x="753.636" y="164.545" width="29.9091" height="25.1818"/>
+  <object id="582" name="Rock" x="530.182" y="192.727" width="12.5455" height="12"/>
+  <object id="583" name="Rock" x="548.727" y="101.091" width="24.1818" height="20.3636"/>
+  <object id="584" name="Rock" x="545.091" y="131.455" width="30" height="26.5455"/>
+ </objectgroup>
+</map>
