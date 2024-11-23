@@ -62,6 +62,11 @@ class Game:
         self.attackfire_icon = pygame.image.load("../../res/img/attackfire_icon_64x64.png")
         self.heal_icon = pygame.image.load("../../res/img/heal_icon_64x64.png")
         self.icon_cooldown = IconCooldown(self)
+
+        self.attack_sound = pygame.mixer.Sound("../../res/SoundEffect/Use/attack.flac")
+        self.attackFire_sound = pygame.mixer.Sound("../../res/SoundEffect/Use/attackFire.wav")
+        self.heal_sound = pygame.mixer.Sound("../../res/SoundEffect/Use/heal.ogg")
+
         self.scoreboard = Scoreboard(self)
         self.challenge_active = False
         self.challenge_start_time = 0
@@ -160,7 +165,8 @@ class Game:
             if event.type == pygame.QUIT:
                 self.playing = False
                 self.running = False
-            if event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN and Attack.can_create():
+                self.attack_sound.play()
                 if event.key == pygame.K_SPACE:
                     if self.player.facing == 'up':
                         attack = Attack(self, self.player.rect.x, self.player.rect.y - TILESIZE)
@@ -174,7 +180,8 @@ class Game:
                     self.all_sprites.add(attack)
                     self.attacks.add(attack)        # cái này nữa, mấy cái bên dưới nữa
                     attack.use_skill()  # Cập nhật last_used khi sử dụng
-                elif event.key == pygame.K_h:
+                elif event.key == pygame.K_h and AttackFire.can_create():
+                    self.attackFire_sound.play()
                     direction = self.player.facing
                     if self.player.facing == 'up':
                         attack_fire = AttackFire(self, self.player.rect.x - 8, self.player.rect.y - TILESIZE, direction)
@@ -188,7 +195,8 @@ class Game:
                     self.all_sprites.add(attack_fire)
                     self.attacksFire.add(attack_fire) # đay nữa
                     attack_fire.use_skill()  # Cập nhật last_used khi sử dụng
-                elif event.key == pygame.K_c:
+                elif event.key == pygame.K_c and Heal.can_create():
+                    self.heal_sound.play()
                     heal = Heal(self, self.player.rect.x, self.player.rect.y)
                     self.visible_sprites.add(heal) # è è
                     self.all_sprites.add(heal)
