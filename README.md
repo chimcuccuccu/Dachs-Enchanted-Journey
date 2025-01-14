@@ -55,6 +55,6 @@
 
 ![image](https://github.com/user-attachments/assets/b327f5b1-3b73-4408-ab93-4d23ab758d16)
 
-> P/S: Mảng này hoàn toàn mới so với mình, mình chưa biết chữ gì và các thành viên trong nhóm cũng thế. Ấy thế mà cả nhóm chỉ có hơn 1 tháng tí tẹo để học, tìm tài nguyên từ A đến Zét và hoàn thành đúng hạn thầy giao trên lớp sOs, nên sản phẩm còn thiếu sót nhiều thứ lắm huhehuhe ai thấy thì đừng thấy 🦫
+> P/S: huhehuhe ai thấy thì đừng thấy 🦫
 
 
